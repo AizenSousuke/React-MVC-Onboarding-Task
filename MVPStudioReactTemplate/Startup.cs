@@ -33,6 +33,18 @@ namespace MVPStudioReactTemplate
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            // Add Cors
+            services.AddCors(cors =>
+            {
+                cors.AddPolicy("AllowOpenOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,14 +60,12 @@ namespace MVPStudioReactTemplate
                 app.UseHsts();
             }
 
+            app.UseCors("AllowOpenOrigin");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseCors(cors =>
-            {
-                cors.AllowAnyOrigin();
-            });
 
             app.UseMvc(routes =>
             {
