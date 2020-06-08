@@ -35,6 +35,8 @@ namespace MVPStudioReactTemplate
                 try
                 {
                     var context = services.GetRequiredService<AppDbContext>();
+                    // Delete old data first before creating new ones
+                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
                     await SeedData.InitializeAsync(services);
                 }

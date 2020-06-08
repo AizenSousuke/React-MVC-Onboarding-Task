@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,11 @@ namespace MVPStudioReactTemplate.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public CustomerController(AppDbContext context)
+        public CustomersController(AppDbContext context)
         {
             _context = context;
         }
@@ -32,9 +33,10 @@ namespace MVPStudioReactTemplate.Controllers
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            Customer customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+            return Ok(customer);
         }
 
         // POST api/<CustomerController>
@@ -51,8 +53,22 @@ namespace MVPStudioReactTemplate.Controllers
 
         // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            Customer customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+            _context.Customers.Remove(customer);
+            bool isDeleted = await SaveChangesAsync();
+            if (!isDeleted)
+            {
+                return BadRequest("Object not deleted");
+            }
+            return Ok(customer);
+        }
+
+        private async Task<bool> SaveChangesAsync()
+        {
+            bool isSaved = await _context.SaveChangesAsync() > 0;
+            return isSaved;
         }
     }
 }
