@@ -32,8 +32,8 @@ namespace MVPStudioReactTemplate.Controllers
         }
 
         // GET api/<CustomerController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
             Customer customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
             return Ok(customer);
@@ -41,19 +41,63 @@ namespace MVPStudioReactTemplate.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> PostAsync([FromBody] Customer customer)
         {
+            // Check if exists
+            bool exists = await _context.Customers.AnyAsync(c => c.Name == customer.Name);
+            if (exists)
+            {
+                return BadRequest("Customer Exists");
+            }
+
+            await _context.Customers.AddAsync(customer);
+            bool isSaved = await SaveChangesAsync();
+            if (!isSaved)
+            {
+                return BadRequest("Object not created");
+            }
+
+            return Ok();
         }
 
         // PUT api/<CustomerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] Customer customer)
         {
+            // Check if exists
+            Customer oldCustomer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+            if (oldCustomer == null)
+            {
+                // Add new
+                await _context.Customers.AddAsync(customer);
+                bool isSaved = await SaveChangesAsync();
+                if (!isSaved)
+                {
+                    return BadRequest("Object not created");
+                }
+
+                return Ok("New object created because it does not exists");
+            }
+
+            // Update
+            oldCustomer.Name = customer.Name;
+            oldCustomer.Address = customer.Address;
+
+            // Change the entity state
+            _context.Entry(oldCustomer).State = EntityState.Modified;
+
+            bool isUpdated = await SaveChangesAsync();
+            if (!isUpdated)
+            {
+                return BadRequest("Object not updated");
+            }
+
+            return Ok();
         }
 
         // DELETE api/<CustomerController>/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             Customer customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
             _context.Customers.Remove(customer);
@@ -62,7 +106,7 @@ namespace MVPStudioReactTemplate.Controllers
             {
                 return BadRequest("Object not deleted");
             }
-            return Ok(customer);
+            return Ok();
         }
 
         private async Task<bool> SaveChangesAsync()
