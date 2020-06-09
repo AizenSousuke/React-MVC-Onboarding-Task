@@ -62,7 +62,7 @@ export class Page extends Component {
                     <Grid.Column width={4}>
                         <Modal
                             trigger={<Button onClick={() => this.handleModalClose(false)} fluid primary>Add</Button>}
-                            size="mini"
+                            size={"mini"}
                             open={this.state.modalOpen}
                         >
                             <Modal.Header>
@@ -83,11 +83,17 @@ export class Page extends Component {
                     <Grid.Column width={2}>
                         Id
                     </Grid.Column>
-                    <Grid.Column width={6}>
+                    <Grid.Column width={5}>
                         Name
                     </Grid.Column>
-                    <Grid.Column width={8}>
+                    <Grid.Column width={5}>
                         Address
+                    </Grid.Column>
+                    <Grid.Column width={2}>
+                        Action
+                    </Grid.Column>
+                    <Grid.Column width={2}>
+                        Action
                     </Grid.Column>
                 </Grid.Row>
                 {this.state.list.length > 0 ? this.state.list.map(o => {
@@ -106,6 +112,22 @@ export class Page extends Component {
                                 Edit
                             </Grid.Column>
                             <Grid.Column width={2}>
+                                {/* <Modal
+                                    trigger={<Button compact negative onClick={() => this.handleDelete(o.id)} >Delete</Button>}
+                                    size={"mini"}
+                                    open={this.state.modalOpen}
+                                >
+                                    <Modal.Header>
+                                        Delete
+                                    </Modal.Header>
+                                    <Modal.Content>
+                                        Are you sure?
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button negative onClick={() => this.handleModalClose(true)} >No</Button>
+                                        <Button positive onClick={() => this.handleModalClose(true)} >Yes</Button>
+                                    </Modal.Actions>
+                                </Modal> */}
                                 <Button compact negative onClick={() => this.handleDelete(o.id)} >Delete</Button>
                             </Grid.Column>
                         </Grid.Row>
