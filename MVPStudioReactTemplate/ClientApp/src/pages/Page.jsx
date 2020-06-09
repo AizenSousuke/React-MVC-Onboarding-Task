@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Button, Modal } from 'semantic-ui-react';
 import Api from '../services/Api';
+import { ModalForm } from '../components/ModalForm';
 
 export class Page extends Component {
     constructor(props) {
@@ -11,6 +12,11 @@ export class Page extends Component {
         }
 
         this.API = new Api();
+
+        this.FormRef = React.createRef();
+    }
+
+    componentDidMount() {
         this.Init();
     }
 
@@ -24,6 +30,12 @@ export class Page extends Component {
             trueOrFalse = !trueOrFalse;
             this.setState({ modalOpen: trueOrFalse });
             console.log("Accept");
+            // Example of getting state from child component
+            console.log(this.FormRef.current.state);
+            this.API.POST("CUSTOMERS", { name: this.FormRef.current.state.name, address: this.FormRef.current.state.address }).then((res) => {
+                console.log(res);
+                this.Init();
+            });
             return true;
         };
 
@@ -33,10 +45,17 @@ export class Page extends Component {
         return false;
     }
 
+    handleDelete(id) {
+        this.API.DELETE("CUSTOMERS", id).then((res) => {
+            console.log("Deleted ", res);
+            this.Init();
+        })
+    }
+
     render() {
         return (
             <Grid celled>
-                <Grid.Row>
+                <Grid.Row color={"black"}>
                     <Grid.Column width={12}>
                         <h1>{this.props.title}</h1>
                     </Grid.Column>
@@ -50,6 +69,7 @@ export class Page extends Component {
                                 Confirm action
                             </Modal.Header>
                             <Modal.Content>
+                                <ModalForm ref={this.FormRef} />
                                 Are you sure you want to add the item?
                             </Modal.Content>
                             <Modal.Actions>
@@ -59,7 +79,7 @@ export class Page extends Component {
                         </Modal>
                     </Grid.Column>
                 </Grid.Row>
-                <Grid.Row>
+                <Grid.Row color={"grey"}>
                     <Grid.Column width={2}>
                         Id
                     </Grid.Column>
@@ -76,11 +96,17 @@ export class Page extends Component {
                             <Grid.Column width={2}>
                                 {o.id}
                             </Grid.Column>
-                            <Grid.Column width={6}>
+                            <Grid.Column width={5}>
                                 {o.name}
                             </Grid.Column>
-                            <Grid.Column width={8}>
+                            <Grid.Column width={5}>
                                 {o.address}
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                                Edit
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                                <Button compact negative onClick={() => this.handleDelete(o.id)} >Delete</Button>
                             </Grid.Column>
                         </Grid.Row>
                     )

@@ -44,6 +44,7 @@ export class Home extends Component {
                 <Grid.Column>
                     <Grid.Row>
                         <Menu>
+                            <Menu.Item as={"h3"} header>React</Menu.Item>
                             <Menu.Item
                                 as={ Link }
                                 to='/'

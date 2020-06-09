@@ -25,7 +25,7 @@ export class Api {
 		return data;
 	}
 
-	POST(obj, param = "", objbody) {
+	POST(obj, objbody, param = "") {
         let data;
 		data = fetch(this.API_URL + obj + (param !== "" ? "/" + param : ""), {
             method: 'POST',
