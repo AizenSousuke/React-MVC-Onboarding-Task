@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Api } from "../services/Api";
 import { Container, Grid, Menu } from "semantic-ui-react";
 import { Route, Link } from 'react-router-dom';
-import { Customers } from '../pages/Customers';
+import { Page } from './Page';
 
 export class Home extends Component {
 	constructor(props) {
@@ -12,10 +12,10 @@ export class Home extends Component {
             activeMenu: "sales",
 			customers: [],
 		};
+		this.Init();
 	}
 
 	componentWillMount() {
-		this.Init();
 	}
 
 	Init() {
@@ -40,62 +40,56 @@ export class Home extends Component {
         const { activeMenu } = this.state.activeMenu;
 
 		return (
-            <Container>
-                <Grid columns={1}>
-                    <Grid.Column>
-                        <Grid.Row>
-                            <Menu>
-                                <Menu.Item
-                                    as={ Link }
-                                    to='/'
-                                    name="sales"
-                                    active={ activeMenu === 'sales'}
-                                    onClick={this.handleMenuClick}
-                                >
-                                    Sales
-                                </Menu.Item>
-                                <Menu.Item
-                                    as={ Link }
-                                    to='/stores'
-                                    name="stores"
-                                    active={ activeMenu === 'stores'}
-                                    onClick={this.handleMenuClick}
-                                >
-                                    Stores
-                                </Menu.Item>
-                                <Menu.Item
-                                    as={ Link }
-                                    to='/customers'
-                                    name="customers"
-                                    active={ activeMenu === 'customers'}
-                                    onClick={this.handleMenuClick}
-                                >
-                                    Customers
-                                </Menu.Item>
-                                <Menu.Item
-                                    as={ Link }
-                                    to='/products'
-                                    name="products"
-                                    active={ activeMenu === 'products'}
-                                    onClick={this.handleMenuClick}
-                                >
-                                    Products
-                                </Menu.Item>
-                            </Menu>
-                        </Grid.Row>
-                        <Grid.Row>
-                            {/* Customers GET:{" "}
-                            {this.state.customers.map((c) => (
-                                <li key={c.id}>{c.name.toString()}</li>
-                            ))} */}
-                            <Route exact path="/" render={() => {return <Customers title="Sales" />}} />
-                            <Route exact path="/stores" render={() => {return <Customers title="Stores" />}} />
-                            <Route exact path="/customers" render={() => {return <Customers title="Customers" />}} />
-                            <Route exact path="/products" render={() => {return <Customers title="Products" />}} />
-                        </Grid.Row>
-                    </Grid.Column>
-                </Grid>
-            </Container>
+            <Grid container>
+                <Grid.Column>
+                    <Grid.Row>
+                        <Menu>
+                            <Menu.Item
+                                as={ Link }
+                                to='/'
+                                name="sales"
+                                active={ activeMenu === 'sales'}
+                                onClick={this.handleMenuClick}
+                            >
+                                Sales
+                            </Menu.Item>
+                            <Menu.Item
+                                as={ Link }
+                                to='/stores'
+                                name="stores"
+                                active={ activeMenu === 'stores'}
+                                onClick={this.handleMenuClick}
+                            >
+                                Stores
+                            </Menu.Item>
+                            <Menu.Item
+                                as={ Link }
+                                to='/customers'
+                                name="customers"
+                                active={ activeMenu === 'customers'}
+                                onClick={this.handleMenuClick}
+                            >
+                                Customers
+                            </Menu.Item>
+                            <Menu.Item
+                                as={ Link }
+                                to='/products'
+                                name="products"
+                                active={ activeMenu === 'products'}
+                                onClick={this.handleMenuClick}
+                            >
+                                Products
+                            </Menu.Item>
+                        </Menu>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Route exact path="/" render={() => {return <Page title="Sales" />}} />
+                        <Route exact path="/stores" render={() => {return <Page title="Stores" />}} />
+                        <Route exact path="/customers" render={() => {return <Page title="Customers" />}} />
+                        <Route exact path="/products" render={() => {return <Page title="Products" />}} />
+                    </Grid.Row>
+                </Grid.Column>
+            </Grid>
 		);
 	}
 }
