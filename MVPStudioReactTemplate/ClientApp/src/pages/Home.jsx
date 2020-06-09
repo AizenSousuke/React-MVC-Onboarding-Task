@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Api } from "../services/Api";
-import { Container, Grid, Menu } from "semantic-ui-react";
+import { Grid, Menu } from "semantic-ui-react";
 import { Route, Link } from 'react-router-dom';
 import { Page } from './Page';
 

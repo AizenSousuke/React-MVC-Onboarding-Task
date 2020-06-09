@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 // import { FetchData } from './components/FetchData';
 // import { Counter } from './components/Counter';
 import { Home } from './pages/Home';
-import 'semantic-ui-css/semantic.min.css';
 
 export default class App extends Component {
   displayName = App.name
