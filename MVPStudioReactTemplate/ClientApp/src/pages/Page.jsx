@@ -10,6 +10,7 @@ export class Page extends Component {
 		this.state = {
 			type: "",
 			action: "",
+			param: "",
 			list: [],
 			modalCreateOpen: false,
 			modalEditOpen: false,
@@ -21,87 +22,72 @@ export class Page extends Component {
 
 		// this.FormRef = React.createRef();
 		this.ModalRef = React.createRef();
-    }
-    
-    componentWillMount() {
+	}
+
+	componentDidMount() {
 		this.Init();
-    }
+	}
 
 	Init() {
-        this.setState({ type: this.props.title });
+		this.setState({ type: this.props.title });
 		this.API.GET(this.props.title).then((data) =>
 			this.setState({ list: data })
 		);
 	}
 
-	handleModalClose(
-		modal,
-		trueOrFalse,
-		accept = false,
-		doWhat = null,
-		id = null
-	) {
-		if (accept) {
-			// On close and accepted, do something here
-			trueOrFalse = !trueOrFalse;
-			// this.setState({ modalOpen: trueOrFalse });
-			// Set state based on the prop passed
-			this.setState({ [modal]: trueOrFalse });
-			console.log("Accept");
-			switch (doWhat) {
-				case "EDIT":
-					this.API.PUT("CUSTOMERS", id, {
-						name: this.FormRef.current.state.name,
-						address: this.FormRef.current.state.address,
-					}).then((res) => {
-						console.log("Edited ", res);
-						this.Init();
-					});
-					break;
-				case "DELETE":
-					this.API.DELETE("CUSTOMERS", id).then((res) => {
-						console.log("Deleted ", res);
-						this.Init();
-					});
-					break;
-				default:
-					// Example of getting state from child component
-					console.log(this.FormRef.current.state);
-					this.API.POST("CUSTOMERS", {
-						name: this.FormRef.current.state.name,
-						address: this.FormRef.current.state.address,
-					}).then((res) => {
-						console.log(res);
-						this.Init();
-					});
-					break;
-			}
-			return true;
-		}
+	// handleModalClose(
+	// 	modal,
+	// 	trueOrFalse,
+	// 	accept = false,
+	// 	doWhat = null,
+	// 	id = null
+	// ) {
+	// 	if (accept) {
+	// 		// On close and accepted, do something here
+	// 		trueOrFalse = !trueOrFalse;
+	// 		// this.setState({ modalOpen: trueOrFalse });
+	// 		// Set state based on the prop passed
+	// 		this.setState({ [modal]: trueOrFalse });
+	// 		console.log("Accept");
+	// 		switch (doWhat) {
+	// 			case "EDIT":
+	// 				this.API.PUT("CUSTOMERS", id, {
+	// 					name: this.FormRef.current.state.name,
+	// 					address: this.FormRef.current.state.address,
+	// 				}).then((res) => {
+	// 					console.log("Edited ", res);
+	// 					this.Init();
+	// 				});
+	// 				break;
+	// 			case "DELETE":
+	// 				this.API.DELETE("CUSTOMERS", id).then((res) => {
+	// 					console.log("Deleted ", res);
+	// 					this.Init();
+	// 				});
+	// 				break;
+	// 			default:
+	// 				// Example of getting state from child component
+	// 				console.log(this.FormRef.current.state);
+	// 				this.API.POST("CUSTOMERS", {
+	// 					name: this.FormRef.current.state.name,
+	// 					address: this.FormRef.current.state.address,
+	// 				}).then((res) => {
+	// 					console.log(res);
+	// 					this.Init();
+	// 				});
+	// 				break;
+	// 		}
+	// 		return true;
+	// 	}
 
-		// Toggle State
-		trueOrFalse = !trueOrFalse;
-		// this.setState({ modalOpen: trueOrFalse });
-		// Set state based on the prop passed
-		console.log(modal);
-		this.setState({ [modal]: trueOrFalse });
-		return false;
-	}
-
-	openModal(accept = false) {
-		this.setState({ modalOpen: !this.state.modalOpen });
-        if (accept) {
-            console.log("Accept");
-            return true;
-        }
-
-        return false;
-    }
-    
-    setModal(type, action = null, id = null) {
-        this.setState({ type: type, action: action, id: id });
-        this.openModal();
-    }
+	// 	// Toggle State
+	// 	trueOrFalse = !trueOrFalse;
+	// 	// this.setState({ modalOpen: trueOrFalse });
+	// 	// Set state based on the prop passed
+	// 	console.log(modal);
+	// 	this.setState({ [modal]: trueOrFalse });
+	// 	return false;
+	// }
 
 	// handleDelete(id) {
 	//     this.API.DELETE("CUSTOMERS", id).then((res) => {
@@ -110,23 +96,81 @@ export class Page extends Component {
 	//     })
 	// }
 
+	openModal(
+		accept = false,
+		type = this.state.type,
+		action = this.state.action,
+		param = this.state.param
+	) {
+		this.setState({ modalOpen: !this.state.modalOpen });
+		if (accept) {
+			console.log("Accept", type, action, param);
+			// Call API here
+			switch (action) {
+                case "DELETE":
+					this.API.DELETE(type, param.id).then((res) => {
+						if (res.status !== 200) {
+							console.log(res);
+						}
+						this.Init();
+					});
+                    break;
+				case "EDIT":
+					this.API.PUT(type, param.id, param).then((res) => {
+						if (res.status !== 200) {
+							console.log(res);
+						}
+						this.Init();
+					});
+					break;
+				default:
+					this.API.POST(type, param).then((res) => {
+						if (res.status !== 200) {
+							console.log(res);
+						}
+						this.Init();
+					});
+					break;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	setModal(type, action = null, param = null) {
+        this.setState({ type: type, action: action, param: param }, () => {
+            console.log("Modal State: ", this.state);
+            this.openModal(false, type, action, param);
+        });
+	}
+
 	render() {
 		return (
 			<Grid celled>
 				<CustomerModal
-                    ref={this.ModalRef}
+					ref={this.ModalRef}
 					open={this.state.modalOpen}
 					type={this.state.type}
 					action={this.state.action}
-                    id={this.state.id}
-                    closeMethod={this.openModal.bind(this)}
+					param={this.state.param}
+					closeMethod={this.openModal.bind(this)}
 				/>
 				<Grid.Row color={"black"}>
 					<Grid.Column width={12}>
 						<h1>{this.props.title}</h1>
 					</Grid.Column>
 					<Grid.Column width={4}>
-						<Button onClick={() => this.setModal(this.state.type, "CREATE")}>Add</Button>
+						<Button
+							primary
+							fluid
+							onClick={() =>
+								this.setModal(this.state.type, "CREATE", { name: "", address: "" })
+							}
+						>
+							Add
+						</Button>
 						{/* <Modal
                             trigger={<Button onClick={() => this.handleModalClose("modalCreateOpen", false)} fluid primary>Add</Button>}
                             size={"mini"}
@@ -160,6 +204,15 @@ export class Page extends Component {
 								<Grid.Column width={5}>{o.name}</Grid.Column>
 								<Grid.Column width={5}>{o.address}</Grid.Column>
 								<Grid.Column width={2}>
+                                    <Button
+                                        primary
+                                        fluid
+                                        onClick={() =>
+                                            this.setModal(this.state.type, "EDIT", { id: o.id, name: o.name, address: o.address })
+                                        }
+                                    >
+                                        Edit
+                                    </Button>
 									{/* <Modal
                                     trigger={<Button fluid secondary onClick={() => this.handleModalClose("modalEditOpen", false)}>Edit</Button>}
                                     size={"mini"}
@@ -178,6 +231,15 @@ export class Page extends Component {
                                 </Modal> */}
 								</Grid.Column>
 								<Grid.Column width={2}>
+                                    <Button
+                                        negative
+                                        fluid
+                                        onClick={() =>
+                                            this.setModal(this.state.type, "DELETE", { id: o.id, name: o.name, address: o.address })
+                                        }
+                                    >
+                                        Delete
+                                    </Button>
 									{/* <Modal
                                     trigger={<Button fluid negative onClick={() => this.handleModalClose("modalDeleteOpen", false)}>Delete</Button>}
                                     size={"mini"}

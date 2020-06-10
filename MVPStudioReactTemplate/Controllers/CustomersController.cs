@@ -43,8 +43,8 @@ namespace MVPStudioReactTemplate.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] Customer customer)
         {
-            // Check if exists
-            bool exists = await _context.Customers.AnyAsync(c => c.Name == customer.Name);
+            // Check if exists the same data
+            bool exists = await _context.Customers.AnyAsync(c => c.Name == customer.Name && c.Address == customer.Address);
             if (exists)
             {
                 return BadRequest("Customer Exists");

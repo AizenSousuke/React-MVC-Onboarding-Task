@@ -11,17 +11,12 @@ export class Home extends Component {
 		this.state = {
             activeMenu: "sales",
 			customers: [],
-		};
+        };
+        
 		this.Init();
 	}
 
-	componentWillMount() {
-	}
-
 	Init() {
-		// fetch(this.API.API_URL + "customers")
-		//     .then(res => {return res.json()})
-		//     .then(data => {this.setState({customers: data})});
 		this.API.GET("CUSTOMERS").then((data) =>
 			this.setState({ customers: data })
 		);
