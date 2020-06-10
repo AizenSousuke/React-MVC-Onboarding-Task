@@ -34,67 +34,6 @@ export class Page extends Component {
 		);
 	}
 
-	// handleModalClose(
-	// 	modal,
-	// 	trueOrFalse,
-	// 	accept = false,
-	// 	doWhat = null,
-	// 	id = null
-	// ) {
-	// 	if (accept) {
-	// 		// On close and accepted, do something here
-	// 		trueOrFalse = !trueOrFalse;
-	// 		// this.setState({ modalOpen: trueOrFalse });
-	// 		// Set state based on the prop passed
-	// 		this.setState({ [modal]: trueOrFalse });
-	// 		console.log("Accept");
-	// 		switch (doWhat) {
-	// 			case "EDIT":
-	// 				this.API.PUT("CUSTOMERS", id, {
-	// 					name: this.FormRef.current.state.name,
-	// 					address: this.FormRef.current.state.address,
-	// 				}).then((res) => {
-	// 					console.log("Edited ", res);
-	// 					this.Init();
-	// 				});
-	// 				break;
-	// 			case "DELETE":
-	// 				this.API.DELETE("CUSTOMERS", id).then((res) => {
-	// 					console.log("Deleted ", res);
-	// 					this.Init();
-	// 				});
-	// 				break;
-	// 			default:
-	// 				// Example of getting state from child component
-	// 				console.log(this.FormRef.current.state);
-	// 				this.API.POST("CUSTOMERS", {
-	// 					name: this.FormRef.current.state.name,
-	// 					address: this.FormRef.current.state.address,
-	// 				}).then((res) => {
-	// 					console.log(res);
-	// 					this.Init();
-	// 				});
-	// 				break;
-	// 		}
-	// 		return true;
-	// 	}
-
-	// 	// Toggle State
-	// 	trueOrFalse = !trueOrFalse;
-	// 	// this.setState({ modalOpen: trueOrFalse });
-	// 	// Set state based on the prop passed
-	// 	console.log(modal);
-	// 	this.setState({ [modal]: trueOrFalse });
-	// 	return false;
-	// }
-
-	// handleDelete(id) {
-	//     this.API.DELETE("CUSTOMERS", id).then((res) => {
-	//         console.log("Deleted ", res);
-	//         this.Init();
-	//     })
-	// }
-
 	openModal(
 		accept = false,
 		type = this.state.type,
@@ -170,22 +109,6 @@ export class Page extends Component {
 						>
 							Add
 						</Button>
-						{/* <Modal
-                            trigger={<Button onClick={() => this.handleModalClose("modalCreateOpen", false)} fluid primary>Add</Button>}
-                            size={"mini"}
-                            open={this.state.modalCreateOpen}
-                        >
-                            <Modal.Header>
-                                Create
-                            </Modal.Header>
-                            <Modal.Content>
-                                <ModalForm ref={this.FormRef} closeMethod={this.handleModalClose.bind(this)} />
-                            </Modal.Content>
-                            <Modal.Actions>
-                                <Button negative onClick={() => this.handleModalClose("modalCreateOpen", true)} >Cancel</Button>
-                                <Button positive type="submit" form="form">Submit</Button>
-                            </Modal.Actions>
-                        </Modal> */}
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row color={"grey"}>
@@ -212,22 +135,6 @@ export class Page extends Component {
                                     >
                                         Edit
                                     </Button>
-									{/* <Modal
-                                    trigger={<Button fluid secondary onClick={() => this.handleModalClose("modalEditOpen", false)}>Edit</Button>}
-                                    size={"mini"}
-                                    open={this.state.modalEditOpen}
-                                >
-                                    <Modal.Header>
-                                        Edit
-                                    </Modal.Header>
-                                    <Modal.Content>
-                                        <ModalForm ref={this.FormRef} id={o.id} action="EDIT" name={o.name} address={o.address} closeMethod={this.handleModalClose.bind(this)} />
-                                    </Modal.Content>
-                                    <Modal.Actions>
-                                        <Button negative onClick={() => this.handleModalClose("modalEditOpen", true)} >Cancel</Button>
-                                        <Button positive type="submit" form="form">Submit</Button>
-                                    </Modal.Actions>
-                                </Modal> */}
 								</Grid.Column>
 								<Grid.Column width={2}>
                                     <Button
@@ -239,22 +146,6 @@ export class Page extends Component {
                                     >
                                         Delete
                                     </Button>
-									{/* <Modal
-                                    trigger={<Button fluid negative onClick={() => this.handleModalClose("modalDeleteOpen", false)}>Delete</Button>}
-                                    size={"mini"}
-                                    open={this.state.modalDeleteOpen}
-                                >
-                                    <Modal.Header>
-                                        Delete
-                                    </Modal.Header>
-                                    <Modal.Content>
-                                        Are you sure?
-                                    </Modal.Content>
-                                    <Modal.Actions>
-                                        <Button negative onClick={() => this.handleModalClose("modalDeleteOpen", true)} >No</Button>
-                                        <Button positive onClick={() => this.handleModalClose("modalDeleteOpen", true, true, "DELETE", o.id)} >Yes</Button>
-                                    </Modal.Actions>
-                                </Modal> */}
 								</Grid.Column>
 							</Grid.Row>
 						);
@@ -262,7 +153,7 @@ export class Page extends Component {
 				) : (
 					<Grid.Row width={16}>
 						<Grid.Column width={16} textAlign="center">
-							"Nothing to show here"
+							"Nothing to show here. Add one!"
 						</Grid.Column>
 					</Grid.Row>
 				)}

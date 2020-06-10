@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Modal, Button } from "semantic-ui-react";
+import { Form, Modal, Button, Message } from "semantic-ui-react";
 
 class CustomerModal extends Component {
 	constructor(props) {
@@ -7,6 +7,7 @@ class CustomerModal extends Component {
 		this.state = {
 			name: "",
 			address: "",
+			number: "",
 		};
 	}
 
@@ -45,35 +46,76 @@ class CustomerModal extends Component {
 
 	render() {
 		var FormItems;
-		if (this.props.action !== "DELETE") {
-			FormItems = (
-				<div>
-					<Form.Field required>
-						<label>Name</label>
-						<Form.Input
-							onChange={(e) =>
-								this.setState({ name: e.target.value })
-							}
-							placeholder="Name"
-							value={this.state.name}
-							required
-						/>
-					</Form.Field>
-					<Form.Field required>
-						<label>Address</label>
-						<Form.Input
-							onChange={(e) =>
-								this.setState({ address: e.target.value })
-							}
-							placeholder="Address"
-							value={this.state.address}
-							required
-						/>
-					</Form.Field>
-				</div>
-			);
-		} else {
-			FormItems = <div>Are you sure?</div>;
+		switch (this.props.type) {
+			case "Products":
+				if (this.props.action !== "DELETE") {
+					FormItems = (
+						<div>
+							<Form.Field required>
+								<label>Name</label>
+								<Form.Input
+									onChange={(e) =>
+										this.setState({ name: e.target.value })
+									}
+									placeholder="Name"
+									value={this.state.name}
+									required
+								/>
+							</Form.Field>
+							<Form.Field required>
+								<label>Price</label>
+								<Form.Input
+									onChange={(e) => {
+											this.setState({ number: e.target.value});
+										}
+									}
+									placeholder="0.00"
+									value={this.state.number}
+									pattern="([0-9]{1,5})([.]([0-9]{2}))?"
+									required
+								/>
+								<Message content="Please ensure that the price is in the format of 12345.12. Decimals are optional. Max of 99999.99." />
+							</Form.Field>
+						</div>
+					);
+				} else {
+					FormItems = <div>Are you sure?</div>;
+				}
+				break;
+			default:
+				if (this.props.action !== "DELETE") {
+					FormItems = (
+						<div>
+							<Form.Field required>
+								<label>Name</label>
+								<Form.Input
+									onChange={(e) =>
+										this.setState({ name: e.target.value })
+									}
+									placeholder="Name"
+									value={this.state.name}
+									required
+								/>
+							</Form.Field>
+							<Form.Field required>
+								<label>Address</label>
+								<Form.Input
+									onChange={(e) =>
+										this.setState({
+											address: e.target.value,
+										})
+									}
+									placeholder="Address"
+									value={this.state.address}
+									required
+								/>
+							</Form.Field>
+						</div>
+					);
+				} else {
+					FormItems = <div>Are you sure?</div>;
+				}
+				break;
 		}
 
 		return (
