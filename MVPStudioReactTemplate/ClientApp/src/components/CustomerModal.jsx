@@ -36,17 +36,17 @@ class CustomerModal extends Component {
 					name: this.props.param.name,
 					address: this.props.param.address,
 				});
-                break;
-            default:
-                this.setState({ name: "", address: "" });
-                break;
+				break;
+			default:
+				this.setState({ name: "", address: "" });
+				break;
 		}
 	}
 
 	render() {
 		var FormItems;
 		if (this.props.action !== "DELETE") {
-			var FormItems = (
+			FormItems = (
 				<div>
 					<Form.Field required>
 						<label>Name</label>
@@ -73,8 +73,8 @@ class CustomerModal extends Component {
 				</div>
 			);
 		} else {
-            FormItems = <div>Are you sure?</div>;
-        }
+			FormItems = <div>Are you sure?</div>;
+		}
 
 		return (
 			<Modal size={"mini"} open={this.props.open}>

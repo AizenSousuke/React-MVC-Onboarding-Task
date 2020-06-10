@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Grid, Button, Modal, Input } from "semantic-ui-react";
+import { Grid, Button } from "semantic-ui-react";
 import Api from "../services/Api";
-import { ModalForm } from "../components/ModalForm";
 import CustomerModal from "../components/CustomerModal";
 
 export class Page extends Component {
