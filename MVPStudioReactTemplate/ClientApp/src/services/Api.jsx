@@ -1,5 +1,5 @@
 export class Api {
-    API_URL = "https://localhost:44379/api/";
+    API_URL = "https://localhost:5001/api/";
     HEADERS = {
         "Accept": "application/json",
         "Content-Type": "application/json"
