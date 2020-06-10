@@ -6,6 +6,7 @@ export class ModalForm extends Component {
         super(props);
         this.state = {
             type: "CUSTOMER",
+            action: "CREATE",
             items: [],
             name: "",
             address: ""
@@ -13,8 +14,13 @@ export class ModalForm extends Component {
     }
 
     componentWillMount() {
-        this.setState({ type: this.props.type }, () => {
-            switch (this.state.type) {
+        this.setState({ action: this.props.action ? this.props.action : "CREATE" }, () => {
+            switch (this.state.action) {
+                case "EDIT":
+                    console.log("Setting modal to edit mode.");
+                    this.setState({ action: "EDIT" });
+                    this.setState({ name: this.props.name, address: this.props.address });
+                    break;
                 case "DELETE":
                     console.log("Setting modal to delete mode.");
                     break;
@@ -32,35 +38,34 @@ export class ModalForm extends Component {
 
     render() {
         switch (this.state.type) {
-            case "DELETE":
+            case "PRODUCTS":
                 break;
             default:
                 return (
-                    <Form id="form" onSubmit={(e) => { e.preventDefault(); console.log("Form Submit"); this.props.closeMethod(true, true); }}>
+                    <Form id="form" onSubmit={(e) => {
+                        e.preventDefault(); 
+                        console.log("Form Submit"); 
+                        switch (this.state.action) {
+                            case "EDIT":
+                                console.log("Edit", this.props.id);
+                                this.props.closeMethod("modalEditOpen", true, true, this.state.action, this.props.id);
+                                break;
+                            default:
+                                this.props.closeMethod("modalCreateOpen", true, true);
+                                break;
+                        }
+                    }}>
                         <Form.Field required>
                             <label>Name</label>
-                            <Form.Input onChange={(e) => this.setState({ name: e.target.value })} placeholder="Name" required />
+                            <Form.Input onChange={(e) => this.setState({ name: e.target.value })} placeholder="Name" value={this.state.name} required />
                         </Form.Field>
                         <Form.Field required>
                             <label>Address</label>
-                            <Form.Input onChange={(e) => this.setState({ address: e.target.value })} placeholder="Address" required />
+                            <Form.Input onChange={(e) => this.setState({ address: e.target.value })} placeholder="Address" value={this.state.address} required />
                         </Form.Field>
                     </Form>
                 )
         }
-        return (
-            <Form>
-                <Form.Field required>
-                    <label>Name</label>
-                    <input onChange={(e) => this.setState({ name: e.target.value })} placeholder="Name" />
-                </Form.Field>
-                <Form.Field required>
-                    <label>Address</label>
-                    <input onChange={(e) => this.setState({ address: e.target.value })} placeholder="Address" />
-                </Form.Field>
-                {/* { this.props.items.length > 0 && this.props.items.map((data) => {return <h3>{data}</h3>}) } */}
-            </Form>
-        )
     }
 }
 
