@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVPStudioReactTemplate.Models
 {
@@ -7,7 +8,10 @@ namespace MVPStudioReactTemplate.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
+        [Required]
+        [RegularExpression("\\d+.\\d{2}")]
         public double Price { get; set; }
     }
 }
