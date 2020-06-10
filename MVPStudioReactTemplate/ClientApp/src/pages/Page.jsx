@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Button, Modal } from 'semantic-ui-react';
+import { Grid, Button, Modal, Input } from 'semantic-ui-react';
 import Api from '../services/Api';
 import { ModalForm } from '../components/ModalForm';
 
@@ -66,15 +66,15 @@ export class Page extends Component {
                             open={this.state.modalOpen}
                         >
                             <Modal.Header>
-                                Confirm action
+                                Add New Item
                             </Modal.Header>
                             <Modal.Content>
-                                <ModalForm ref={this.FormRef} />
-                                Are you sure you want to add the item?
+                                <ModalForm ref={this.FormRef} closeMethod={this.handleModalClose.bind(this)} />
+                                {/* Are you sure you want to add the item? */}
                             </Modal.Content>
                             <Modal.Actions>
-                                <Button negative onClick={() => this.handleModalClose(true)} >No</Button>
-                                <Button positive onClick={() => this.handleModalClose(true, true)} >Yes</Button>
+                                <Button negative onClick={() => this.handleModalClose(true)} >Cancel</Button>
+                                <Button positive type="submit" form="form">Submit</Button>
                             </Modal.Actions>
                         </Modal>
                     </Grid.Column>

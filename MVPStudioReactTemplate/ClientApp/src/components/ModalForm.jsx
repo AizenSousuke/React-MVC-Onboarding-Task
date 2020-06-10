@@ -33,18 +33,18 @@ export class ModalForm extends Component {
     render() {
         switch (this.state.type) {
             case "DELETE":
+                break;
             default:
                 return (
-                    <Form>
+                    <Form id="form" onSubmit={(e) => { e.preventDefault(); console.log("Form Submit"); this.props.closeMethod(true, true); }}>
                         <Form.Field required>
                             <label>Name</label>
-                            <input onChange={(e) => this.setState({ name: e.target.value })} placeholder="Name" />
+                            <Form.Input onChange={(e) => this.setState({ name: e.target.value })} placeholder="Name" required />
                         </Form.Field>
                         <Form.Field required>
                             <label>Address</label>
-                            <input onChange={(e) => this.setState({ address: e.target.value })} placeholder="Address" />
+                            <Form.Input onChange={(e) => this.setState({ address: e.target.value })} placeholder="Address" required />
                         </Form.Field>
-                        {/* { this.props.items.length > 0 && this.props.items.map((data) => {return <h3>{data}</h3>}) } */}
                     </Form>
                 )
         }
