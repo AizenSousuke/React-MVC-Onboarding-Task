@@ -123,42 +123,42 @@ namespace MVPStudioReactTemplate.Models
                 await context.Sales.AddRangeAsync(
                     new Sale()
                     {
-                        DateSold = DateTime.Now.AddDays(random.Next(1,5)),
+                        DateSold = DateTime.Today.AddDays(random.Next(1,5)),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mario"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Phone"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "USA")
                     },
                     new Sale()
                     {
-                        DateSold = DateTime.Now.AddDays(random.Next(1, 5)),
+                        DateSold = DateTime.Today.AddDays(random.Next(1, 5)),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Nik"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "Singapore")
                     },
                     new Sale()
                     {
-                        DateSold = DateTime.Now.AddDays(random.Next(1, 5)),
+                        DateSold = DateTime.Today.AddDays(random.Next(1, 5)),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Holmes"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Phone"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "USA")
                     },
                     new Sale()
                     {
-                        DateSold = DateTime.Now.AddDays(random.Next(1, 5)),
+                        DateSold = DateTime.Today.AddDays(random.Next(1, 5)),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Maverick"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "London")
                     },
                     new Sale()
                     {
-                        DateSold = DateTime.Now.AddDays(random.Next(1, 5)),
+                        DateSold = DateTime.Today.AddDays(random.Next(1, 5)),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Nik"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet Cover"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "London")
                     },
                     new Sale()
                     {
-                        DateSold = DateTime.Now.AddDays(random.Next(1, 5)),
+                        DateSold = DateTime.Today.AddDays(random.Next(1, 5)),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mario"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet"), 
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "Singapore")

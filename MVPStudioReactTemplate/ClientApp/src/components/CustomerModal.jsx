@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Form, Modal, Button, Message } from "semantic-ui-react";
+import { Form, Modal, Button, Message, Select } from "semantic-ui-react";
+import Api from "../services/Api";
 
 class CustomerModal extends Component {
 	constructor(props) {
@@ -8,7 +9,13 @@ class CustomerModal extends Component {
 			name: "",
 			address: "",
 			price: "",
+			dateSold: "",
+			customerName: "",
+			productName: "",
+			storeName: "",
 		};
+
+		this.API = new Api();
 	}
 
 	// static getDerivedStateFromProps(nextProps, prevState) {
@@ -37,10 +44,11 @@ class CustomerModal extends Component {
 					name: this.props.param.name,
 					address: this.props.param.address,
 					price: this.props.param.price,
+					dateSold: this.props.param.date,
 				});
 				break;
 			default:
-				this.setState({ name: "", address: "", price: "" });
+				this.setState({ name: "", address: "", price: "", dateSold: "" });
 				break;
 		}
 	}
@@ -60,6 +68,59 @@ class CustomerModal extends Component {
 	render() {
 		var FormItems;
 		switch (this.props.type) {
+			case "Sales":
+				if (this.props.action !== "DELETE") {
+					FormItems = (
+						<div>
+							<Form.Field required>
+								<label>Date Sold</label>
+								<Form.Input
+									type="date"
+									onChange={(e) => {
+										console.log(e.target.value);
+										this.setState({ dateSold: e.target.value });
+									}}
+								/>
+							</Form.Field>
+							<Form.Field required>
+								<label>Name</label>
+								<Form.Input
+									onChange={(e) =>
+										this.setState({ customerName: e.target.value })
+									}
+									placeholder="Customer Name"
+									value={this.state.customerName}
+									required
+								/>
+							</Form.Field>
+							<Form.Field required>
+								<label>Product</label>
+								<Form.Input
+									onChange={(e) =>
+										this.setState({ productName: e.target.value })
+									}
+									placeholder="Product Name"
+									value={this.state.productName}
+									required
+								/>
+							</Form.Field>
+							<Form.Field required>
+								<label>Store</label>
+								<Form.Input
+									onChange={(e) =>
+										this.setState({ storeName: e.target.value })
+									}
+									placeholder="Store Name"
+									value={this.state.storeName}
+									required
+								/>
+							</Form.Field>
+						</div>
+					);
+				} else {
+					FormItems = <div>Are you sure?</div>;
+				}
+				break;
 			case "Products":
 				if (this.props.action !== "DELETE") {
 					FormItems = (
@@ -143,7 +204,7 @@ class CustomerModal extends Component {
 						id="form"
 						onSubmit={(e) => {
 							e.preventDefault();
-							console.log("Form Submit");
+							console.log("Form Submit", e);
 							switch (this.props.action) {
 								case "DELETE":
 									console.log("Delete", this.props.param.id);
@@ -156,6 +217,7 @@ class CustomerModal extends Component {
 											name: this.state.name,
 											address: this.state.address,
 											price: this.state.price,
+											dateSold: this.state.dateSold,
 										}
 									);
 									break;
@@ -170,6 +232,7 @@ class CustomerModal extends Component {
 											name: this.state.name,
 											address: this.state.address,
 											price: this.state.price,
+											dateSold: this.state.dateSold,
 										}
 									);
 									break;
@@ -182,6 +245,7 @@ class CustomerModal extends Component {
 											name: this.state.name,
 											address: this.state.address,
 											price: this.state.price,
+											dateSold: this.state.dateSold,
 										}
 									);
 									break;

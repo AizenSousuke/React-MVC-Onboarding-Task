@@ -29,9 +29,10 @@ export class Page extends Component {
 
 	Init() {
 		this.setState({ type: this.props.title });
-		this.API.GET(this.props.title).then((data) =>
-			this.setState({ list: data })
-		);
+		this.API.GET(this.props.title).then((data) => {
+			this.setState({ list: data });
+			return data;
+		});
 	}
 
 	openModal(
@@ -108,6 +109,7 @@ export class Page extends Component {
 									name: "",
 									address: "",
 									price: "",
+									dateSold: "",
 								})
 							}
 						>
@@ -134,7 +136,7 @@ export class Page extends Component {
 								<Grid.Column width={5}>{o.name}</Grid.Column>
 								<Grid.Column width={5}>
 									{o.address}
-									{o.price}
+									{o.price ? "$" + o.price : ""}
 								</Grid.Column>
 								<Grid.Column width={2}>
 									<Button
@@ -149,6 +151,7 @@ export class Page extends Component {
 													name: o.name,
 													address: o.address,
 													price: o.price,
+													dateSold: o.dateSoldSold,
 												}
 											)
 										}
@@ -169,6 +172,7 @@ export class Page extends Component {
 													name: o.name,
 													address: o.address,
 													price: o.price,
+													dateSold: o.dateSoldSold,
 												}
 											)
 										}
