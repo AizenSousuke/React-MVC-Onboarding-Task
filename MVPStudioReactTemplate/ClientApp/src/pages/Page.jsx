@@ -87,6 +87,40 @@ export class Page extends Component {
 	}
 
 	render() {
+		// Conditional Rendering
+		var TableHeader;
+		var TableBody;
+		switch (this.props.title) {
+			case "Sales":
+				TableHeader = (
+					<Grid.Row color={"grey"} columns="equal">
+						<Grid.Column>Id</Grid.Column>
+						<Grid.Column>Name</Grid.Column>
+						<Grid.Column>Customer</Grid.Column>
+						<Grid.Column>Product</Grid.Column>
+						<Grid.Column>Store</Grid.Column>
+						<Grid.Column>Action</Grid.Column>
+						<Grid.Column>Action</Grid.Column>
+					</Grid.Row>
+				);
+				break;
+			default:
+				TableHeader = (
+					<Grid.Row color={"grey"} columns="equal">
+						<Grid.Column>Id</Grid.Column>
+						<Grid.Column>Name</Grid.Column>
+						<Grid.Column>
+							{this.state.type.toLowerCase() === "products"
+								? "Price"
+								: "Address"}
+						</Grid.Column>
+						<Grid.Column>Action</Grid.Column>
+						<Grid.Column>Action</Grid.Column>
+					</Grid.Row>
+				);
+				break;
+		}
+
 		return (
 			<Grid celled>
 				<CustomerModal
@@ -118,28 +152,28 @@ export class Page extends Component {
 						</Button>
 					</Grid.Column>
 				</Grid.Row>
-				<Grid.Row color={"grey"}>
-					<Grid.Column width={2}>Id</Grid.Column>
-					<Grid.Column width={5}>Name</Grid.Column>
-					<Grid.Column width={5}>
-						{this.state.type.toLowerCase() === "products"
-							? "Price"
-							: "Address"}
-					</Grid.Column>
-					<Grid.Column width={2}>Action</Grid.Column>
-					<Grid.Column width={2}>Action</Grid.Column>
-				</Grid.Row>
+				{TableHeader}
 				{this.state.list.length > 0 ? (
 					this.state.list.map((o) => {
 						return (
-							<Grid.Row key={o.id}>
-								<Grid.Column width={2}>{o.id}</Grid.Column>
-								<Grid.Column width={5}>{o.name}</Grid.Column>
-								<Grid.Column width={5}>
+							<Grid.Row key={o.id} columns="equal">
+								<Grid.Column>{o.id}</Grid.Column>
+								<Grid.Column>
+									{o.name}
+									{o.dateSold}
+								</Grid.Column>
+								<Grid.Column>
 									{o.address}
 									{o.price ? "$" + o.price : ""}
+									{o.customer != null ? o.customer.name : ""}
 								</Grid.Column>
-								<Grid.Column width={2}>
+								<Grid.Column>
+									{o.product != null ? o.product.name : ""}
+								</Grid.Column>
+								<Grid.Column>
+									{o.store != null ? o.store.name : ""}
+								</Grid.Column>
+								<Grid.Column>
 									<Button
 										primary
 										fluid
@@ -154,7 +188,7 @@ export class Page extends Component {
 										Edit
 									</Button>
 								</Grid.Column>
-								<Grid.Column width={2}>
+								<Grid.Column>
 									<Button
 										negative
 										fluid
