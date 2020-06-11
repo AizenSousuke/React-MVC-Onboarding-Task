@@ -45,14 +45,14 @@ export class Page extends Component {
 			console.log("Accept", type, action, param);
 			// Call API here
 			switch (action) {
-                case "DELETE":
+				case "DELETE":
 					this.API.DELETE(type, param.id).then((res) => {
 						if (res.status !== 200) {
 							console.log(res);
 						}
 						this.Init();
 					});
-                    break;
+					break;
 				case "EDIT":
 					this.API.PUT(type, param.id, param).then((res) => {
 						if (res.status !== 200) {
@@ -78,10 +78,10 @@ export class Page extends Component {
 	}
 
 	setModal(type, action = null, param = null) {
-        this.setState({ type: type, action: action, param: param }, () => {
-            console.log("Modal State: ", this.state);
-            this.openModal(false, type, action, param);
-        });
+		this.setState({ type: type, action: action, param: param }, () => {
+			console.log("Modal State: ", this.state);
+			this.openModal(false, type, action, param);
+		});
 	}
 
 	render() {
@@ -104,7 +104,11 @@ export class Page extends Component {
 							primary
 							fluid
 							onClick={() =>
-								this.setModal(this.state.type, "CREATE", { name: "", address: "" })
+								this.setModal(this.state.type, "CREATE", {
+									name: "",
+									address: "",
+									price: "",
+								})
 							}
 						>
 							Add
@@ -114,7 +118,11 @@ export class Page extends Component {
 				<Grid.Row color={"grey"}>
 					<Grid.Column width={2}>Id</Grid.Column>
 					<Grid.Column width={5}>Name</Grid.Column>
-					<Grid.Column width={5}>Address</Grid.Column>
+					<Grid.Column width={5}>
+						{this.state.type.toLowerCase() === "products"
+							? "Price"
+							: "Address"}
+					</Grid.Column>
 					<Grid.Column width={2}>Action</Grid.Column>
 					<Grid.Column width={2}>Action</Grid.Column>
 				</Grid.Row>
@@ -124,28 +132,49 @@ export class Page extends Component {
 							<Grid.Row key={o.id}>
 								<Grid.Column width={2}>{o.id}</Grid.Column>
 								<Grid.Column width={5}>{o.name}</Grid.Column>
-								<Grid.Column width={5}>{o.address}</Grid.Column>
-								<Grid.Column width={2}>
-                                    <Button
-                                        primary
-                                        fluid
-                                        onClick={() =>
-                                            this.setModal(this.state.type, "EDIT", { id: o.id, name: o.name, address: o.address })
-                                        }
-                                    >
-                                        Edit
-                                    </Button>
+								<Grid.Column width={5}>
+									{o.address}
+									{o.price}
 								</Grid.Column>
 								<Grid.Column width={2}>
-                                    <Button
-                                        negative
-                                        fluid
-                                        onClick={() =>
-                                            this.setModal(this.state.type, "DELETE", { id: o.id, name: o.name, address: o.address })
-                                        }
-                                    >
-                                        Delete
-                                    </Button>
+									<Button
+										primary
+										fluid
+										onClick={() =>
+											this.setModal(
+												this.state.type,
+												"EDIT",
+												{
+													id: o.id,
+													name: o.name,
+													address: o.address,
+													price: o.price,
+												}
+											)
+										}
+									>
+										Edit
+									</Button>
+								</Grid.Column>
+								<Grid.Column width={2}>
+									<Button
+										negative
+										fluid
+										onClick={() =>
+											this.setModal(
+												this.state.type,
+												"DELETE",
+												{
+													id: o.id,
+													name: o.name,
+													address: o.address,
+													price: o.price,
+												}
+											)
+										}
+									>
+										Delete
+									</Button>
 								</Grid.Column>
 							</Grid.Row>
 						);

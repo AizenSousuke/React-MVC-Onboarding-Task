@@ -12,7 +12,8 @@ namespace MVPStudioReactTemplate.Models
         [MaxLength(255)]
         public string Name { get; set; }
         [Required]
-        [RegularExpression("\\d+.\\d{2}")]
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        [RegularExpression("([0-9]{1,5})([.]([0-9]{2}))?")]
+        public decimal Price { get; set; }
     }
 }

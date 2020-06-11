@@ -7,7 +7,7 @@ class CustomerModal extends Component {
 		this.state = {
 			name: "",
 			address: "",
-			number: "",
+			price: "",
 		};
 	}
 
@@ -36,11 +36,24 @@ class CustomerModal extends Component {
 				this.setState({
 					name: this.props.param.name,
 					address: this.props.param.address,
+					price: this.props.param.price,
 				});
 				break;
 			default:
-				this.setState({ name: "", address: "" });
+				this.setState({ name: "", address: "", price: "" });
 				break;
+		}
+	}
+
+	priceValidation(e) {
+		console.log("Pattern Mismatch: ", e.target.validity.patternMismatch);
+		if (e.target.validity.patternMismatch) {
+			console.log(
+				"Validation Error: ",
+				e.target.value,
+				" must match ",
+				e.target.pattern
+			);
 		}
 	}
 
@@ -66,11 +79,13 @@ class CustomerModal extends Component {
 								<label>Price</label>
 								<Form.Input
 									onChange={(e) => {
-											this.setState({ number: e.target.value});
-										}
-									}
+										this.setState({
+											price: e.target.value,
+										});
+										this.priceValidation(e);
+									}}
 									placeholder="0.00"
-									value={this.state.number}
+									value={this.state.price}
 									pattern="([0-9]{1,5})([.]([0-9]{2}))?"
 									required
 								/>
@@ -140,6 +155,7 @@ class CustomerModal extends Component {
 											id: this.props.param.id,
 											name: this.state.name,
 											address: this.state.address,
+											price: this.state.price,
 										}
 									);
 									break;
@@ -153,6 +169,7 @@ class CustomerModal extends Component {
 											id: this.props.param.id,
 											name: this.state.name,
 											address: this.state.address,
+											price: this.state.price,
 										}
 									);
 									break;
@@ -164,6 +181,7 @@ class CustomerModal extends Component {
 										{
 											name: this.state.name,
 											address: this.state.address,
+											price: this.state.price,
 										}
 									);
 									break;
@@ -171,28 +189,6 @@ class CustomerModal extends Component {
 						}}
 					>
 						{FormItems}
-						{/* <Form.Field required>
-							<label>Name</label>
-							<Form.Input
-								onChange={(e) =>
-									this.setState({ name: e.target.value })
-								}
-								placeholder="Name"
-								value={this.state.name}
-								required
-							/>
-						</Form.Field>
-						<Form.Field required>
-							<label>Address</label>
-							<Form.Input
-								onChange={(e) =>
-									this.setState({ address: e.target.value })
-								}
-								placeholder="Address"
-								value={this.state.address}
-								required
-							/>
-						</Form.Field> */}
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>

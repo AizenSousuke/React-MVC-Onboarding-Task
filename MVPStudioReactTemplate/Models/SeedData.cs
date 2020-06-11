@@ -36,7 +36,7 @@ namespace MVPStudioReactTemplate.Models
                 await context.Customers.AddRangeAsync(
                     new Customer()
                     {
-                        Name = "Mary",
+                        Name = "Mario",
                         Address = "122 Yishun Road, Singapore"
                     },
                     new Customer()
@@ -47,7 +47,7 @@ namespace MVPStudioReactTemplate.Models
                     new Customer()
                     {
                         Name = "John",
-                        Address = "122 Yishun Road, Singapore"
+                        Address = "762 Bukit Panjang Road, Singapore"
                     },
                     new Customer()
                     {
@@ -66,22 +66,22 @@ namespace MVPStudioReactTemplate.Models
                     new Product()
                     {
                         Name = "Tablet",
-                        Price = 100.00
+                        Price = 89.99m
                     },
                     new Product()
                     {
                         Name = "Phone",
-                        Price = 200.00
+                        Price = 299.95m
                     },
                     new Product()
                     {
                         Name = "Tablet Cover",
-                        Price = 10.00
+                        Price = 10.00m
                     },
                     new Product()
                     {
                         Name = "Phone Casing",
-                        Price = 5.00
+                        Price = 5.00m
                     }
                 );
 
@@ -101,6 +101,16 @@ namespace MVPStudioReactTemplate.Models
                     {
                         Name = "London",
                         Address = "London"
+                    },
+                    new Store()
+                    {
+                        Name = "Malaysia",
+                        Address = "Kedah"
+                    },
+                    new Store()
+                    {
+                        Name = "India",
+                        Address = "Chennai"
                     }
                 );
 
@@ -114,7 +124,7 @@ namespace MVPStudioReactTemplate.Models
                     new Sale()
                     {
                         DateSold = DateTime.Now.AddDays(random.Next(1,5)),
-                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mary"),
+                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mario"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Phone"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "USA")
                     },
@@ -149,7 +159,7 @@ namespace MVPStudioReactTemplate.Models
                     new Sale()
                     {
                         DateSold = DateTime.Now.AddDays(random.Next(1, 5)),
-                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mary"),
+                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mario"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet"), 
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "Singapore")
                     }

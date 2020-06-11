@@ -1,36 +1,36 @@
 export class Api {
-    API_URL = "https://localhost:5001/api/";
-    HEADERS = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
+	API_URL = "https://localhost:5001/api/";
+	HEADERS = {
+		"Accept": "application/json",
+		"Content-Type": "application/json",
+	};
 
-	getAPIURL() {
+	APIURL() {
 		return this.API_URL;
 	}
 
 	GET(obj, param = "") {
 		let data;
 		data = fetch(this.API_URL + obj + (param !== "" ? "/" + param : ""), {
-            method: 'GET',
-			headers: this.HEADERS
+			method: "GET",
+			headers: this.HEADERS,
 		})
 			.then((res) => {
 				return res.json();
 			})
 			.then((data) => {
 				return data;
-            });
+			});
 
 		return data;
 	}
 
 	POST(obj, objbody, param = "") {
-        let data;
+		let data;
 		data = fetch(this.API_URL + obj + (param !== "" ? "/" + param : ""), {
-            method: 'POST',
-            headers: this.HEADERS,
-            body: JSON.stringify(objbody)
+			method: "POST",
+			headers: this.HEADERS,
+			body: JSON.stringify(objbody),
 		})
 			.then((res) => {
 				return res;
@@ -40,14 +40,14 @@ export class Api {
 			});
 
 		return data;
-    }
-    
+	}
+
 	PUT(obj, param, objbody) {
-        let data;
+		let data;
 		data = fetch(this.API_URL + obj + (param !== "" ? "/" + param : ""), {
-            method: 'PUT',
-            headers: this.HEADERS,
-            body: JSON.stringify(objbody)
+			method: "PUT",
+			headers: this.HEADERS,
+			body: JSON.stringify(objbody),
 		})
 			.then((res) => {
 				return res;
@@ -57,13 +57,13 @@ export class Api {
 			});
 
 		return data;
-    }
-    
+	}
+
 	DELETE(obj, param) {
-        let data;
+		let data;
 		data = fetch(this.API_URL + obj + (param !== "" ? "/" + param : ""), {
-            method: 'DELETE',
-            headers: this.HEADERS
+			method: "DELETE",
+			headers: this.HEADERS,
 		})
 			.then((res) => {
 				return res;
