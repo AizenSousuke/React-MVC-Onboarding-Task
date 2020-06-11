@@ -27,7 +27,7 @@ namespace MVPStudioReactTemplate.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<Sale> Sale = await _context.Sales.ToListAsync();
+            List<Sale> Sale = await _context.Sales.Include(s => s.Customer).Include(s => s.Product).Include(s => s.Store).ToListAsync();
             return Ok(Sale);
         }
 

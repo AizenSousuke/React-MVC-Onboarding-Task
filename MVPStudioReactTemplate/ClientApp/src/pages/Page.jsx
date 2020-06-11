@@ -31,6 +31,7 @@ export class Page extends Component {
 		this.setState({ type: this.props.title });
 		this.API.GET(this.props.title).then((data) => {
 			this.setState({ list: data });
+			console.log("Loaded: ", data);
 			return data;
 		});
 	}
@@ -80,7 +81,7 @@ export class Page extends Component {
 
 	setModal(type, action = null, param = null) {
 		this.setState({ type: type, action: action, param: param }, () => {
-			console.log("Modal State: ", this.state);
+			console.log("Modal State: ", this.state, param);
 			this.openModal(false, type, action, param);
 		});
 	}
@@ -146,13 +147,7 @@ export class Page extends Component {
 											this.setModal(
 												this.state.type,
 												"EDIT",
-												{
-													id: o.id,
-													name: o.name,
-													address: o.address,
-													price: o.price,
-													dateSold: o.dateSoldSold,
-												}
+												o
 											)
 										}
 									>

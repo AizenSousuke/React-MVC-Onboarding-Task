@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Modal, Button, Message, Select } from "semantic-ui-react";
+import { Form, Modal, Button, Message, Dropdown } from "semantic-ui-react";
 import Api from "../services/Api";
 
 class CustomerModal extends Component {
@@ -11,11 +11,63 @@ class CustomerModal extends Component {
 			price: "",
 			dateSold: "",
 			customerName: "",
+			customerList: [],
 			productName: "",
+			productList: [],
 			storeName: "",
+			storeList: [],
 		};
 
 		this.API = new Api();
+	}
+
+	componentWillMount() {
+		this.API.GET("CUSTOMERS").then((data) => {
+			// Empty dict
+			var dict = [];
+			data.forEach((c) => {
+				dict.push({
+					key: c.id,
+					value: c.name,
+					text: c.name,
+				});
+			});
+
+			this.setState({ customerList: dict });
+			console.log("Customer List: ", dict);
+		});
+		this.API.GET("PRODUCTS").then((data) => {
+			// Convert array to dict
+			var dict = [];
+			data.forEach((c) => {
+				dict.push({
+					key: c.id,
+					value: c.name,
+					text: c.name,
+				});
+			});
+
+			this.setState({ productList: dict });
+			console.log("Product List: ", dict);
+		});
+		this.API.GET("STORES").then((data) => {
+			// Empty dict
+			var dict = [];
+			data.forEach((c) => {
+				dict.push({
+					key: c.id,
+					value: c.name,
+					text: c.name,
+				});
+			});
+
+			this.setState({ storeList: dict });
+			console.log("Store List: ", dict);
+		});
+	}
+
+	convertIdToName(id) {
+
 	}
 
 	// static getDerivedStateFromProps(nextProps, prevState) {
@@ -36,19 +88,30 @@ class CustomerModal extends Component {
 	// }
 
 	componentWillReceiveProps() {
+		// console.log("Setting modal values: ", this.props);
 		// If edit, set the values
 		switch (this.props.action) {
 			case "EDIT":
-				// console.log("Setting modal values: ", this.props.action);
 				this.setState({
 					name: this.props.param.name,
 					address: this.props.param.address,
 					price: this.props.param.price,
 					dateSold: this.props.param.date,
+					customerName: this.props.param.customerName,
+					productName: this.props.param.productName,
+					storeName: this.props.param.storeName,
 				});
 				break;
 			default:
-				this.setState({ name: "", address: "", price: "", dateSold: "" });
+				this.setState({
+					name: "",
+					address: "",
+					price: "",
+					dateSold: "",
+					customerName: "",
+					productName: "",
+					storeName: "",
+				});
 				break;
 		}
 	}
@@ -78,41 +141,56 @@ class CustomerModal extends Component {
 									type="date"
 									onChange={(e) => {
 										console.log(e.target.value);
-										this.setState({ dateSold: e.target.value });
+										this.setState({
+											dateSold: e.target.value,
+										});
 									}}
 								/>
 							</Form.Field>
 							<Form.Field required>
-								<label>Name</label>
-								<Form.Input
-									onChange={(e) =>
-										this.setState({ customerName: e.target.value })
-									}
+								<label>Customer</label>
+								<Dropdown
+									fluid
+									selection
+									search
+									options={this.state.customerList}
 									placeholder="Customer Name"
+									onChange={({ value }) =>
+										this.setState({
+											customerName: value,
+										})
+									}
 									value={this.state.customerName}
-									required
 								/>
 							</Form.Field>
 							<Form.Field required>
 								<label>Product</label>
-								<Form.Input
-									onChange={(e) =>
-										this.setState({ productName: e.target.value })
-									}
+								<Dropdown
+									fluid
+									selection
+									search
+									options={this.state.productList}
 									placeholder="Product Name"
-									value={this.state.productName}
-									required
+									onChange={(e) =>
+										this.setState({
+											productName: e.target.value,
+										})
+									}
 								/>
 							</Form.Field>
 							<Form.Field required>
 								<label>Store</label>
-								<Form.Input
-									onChange={(e) =>
-										this.setState({ storeName: e.target.value })
-									}
+								<Dropdown
+									fluid
+									selection
+									search
+									options={this.state.storeList}
 									placeholder="Store Name"
-									value={this.state.storeName}
-									required
+									onChange={(e) =>
+										this.setState({
+											storeName: e.target.value,
+										})
+									}
 								/>
 							</Form.Field>
 						</div>
