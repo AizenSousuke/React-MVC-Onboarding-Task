@@ -124,7 +124,7 @@ namespace MVPStudioReactTemplate.Models
                     new Sale()
                     {
                         DateSold = DateTime.Today.AddDays(random.Next(1,5)),
-                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mario"),
+                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Holmes"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Phone"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "USA")
                     },

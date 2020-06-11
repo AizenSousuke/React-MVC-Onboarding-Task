@@ -22,6 +22,7 @@ class CustomerModal extends Component {
 	}
 
 	componentWillMount() {
+		// TODO: Fix data not refreshing since modal is already loaded. This function loads when going to the sales page though. 
 		this.API.GET("CUSTOMERS").then((data) => {
 			// Empty dict
 			var dict = [];
@@ -66,10 +67,6 @@ class CustomerModal extends Component {
 		});
 	}
 
-	convertIdToName(id) {
-
-	}
-
 	// static getDerivedStateFromProps(nextProps, prevState) {
 	// 	// console.log("PROPS: ", prevState, nextProps);
 	// 	if (prevState !== nextProps) {
@@ -97,9 +94,9 @@ class CustomerModal extends Component {
 					address: this.props.param.address,
 					price: this.props.param.price,
 					dateSold: this.props.param.date,
-					customerName: this.props.param.customerName,
-					productName: this.props.param.productName,
-					storeName: this.props.param.storeName,
+					customerName: this.props.param.customer == null ? "" : this.props.param.customer.name,
+					productName: this.props.param.product == null ? "" : this.props.param.product.name,
+					storeName: this.props.param.store == null ? "" : this.props.param.store.name,
 				});
 				break;
 			default:
@@ -171,11 +168,12 @@ class CustomerModal extends Component {
 									search
 									options={this.state.productList}
 									placeholder="Product Name"
-									onChange={(e) =>
+									onChange={({ value }) =>
 										this.setState({
-											productName: e.target.value,
+											productName: value,
 										})
 									}
+									value={this.state.productName}
 								/>
 							</Form.Field>
 							<Form.Field required>
@@ -186,11 +184,12 @@ class CustomerModal extends Component {
 									search
 									options={this.state.storeList}
 									placeholder="Store Name"
-									onChange={(e) =>
+									onChange={({ value }) =>
 										this.setState({
-											storeName: e.target.value,
+											storeName: value,
 										})
 									}
+									value={this.state.storeName}
 								/>
 							</Form.Field>
 						</div>
@@ -282,7 +281,7 @@ class CustomerModal extends Component {
 						id="form"
 						onSubmit={(e) => {
 							e.preventDefault();
-							console.log("Form Submit", e);
+							console.log("Form Submit", e.target);
 							switch (this.props.action) {
 								case "DELETE":
 									console.log("Delete", this.props.param.id);
@@ -311,6 +310,9 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
+											customer: this.state.customerName,
+											product: this.state.productName,
+											store: this.state.storeName,
 										}
 									);
 									break;

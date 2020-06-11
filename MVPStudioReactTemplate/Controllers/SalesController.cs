@@ -35,7 +35,7 @@ namespace MVPStudioReactTemplate.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            Sale Sale = await _context.Sales.FirstOrDefaultAsync(c => c.Id == id);
+            Sale Sale = await _context.Sales.Include(s => s.Customer).Include(s => s.Product).Include(s => s.Store).FirstOrDefaultAsync(c => c.Id == id);
             return Ok(Sale);
         }
 
@@ -44,7 +44,7 @@ namespace MVPStudioReactTemplate.Controllers
         public async Task<IActionResult> PostAsync([FromBody] Sale Sale)
         {
             // Check if exists the same data
-            bool exists = await _context.Sales.AnyAsync(s => s.Customer == Sale.Customer && s.Product == Sale.Product && s.DateSold == Sale.DateSold);
+            bool exists = await _context.Sales.Include(s => s.Customer).Include(s => s.Product).Include(s => s.Store).AnyAsync(s => s.Customer == Sale.Customer && s.Product == Sale.Product && s.DateSold == Sale.DateSold);
             if (exists)
             {
                 return BadRequest("Sale Exists");
