@@ -167,12 +167,22 @@ export class Page extends Component {
 									{o.price ? "$" + o.price : ""}
 									{o.customer != null ? o.customer.name : ""}
 								</Grid.Column>
-								<Grid.Column>
-									{o.product != null ? o.product.name : ""}
-								</Grid.Column>
-								<Grid.Column>
-									{o.store != null ? o.store.name : ""}
-								</Grid.Column>
+								{o.product ? (
+									<Grid.Column>
+										{o.product != null
+											? o.product.name
+											: ""}
+									</Grid.Column>
+								) : (
+									""
+								)}
+								{o.store ? (
+									<Grid.Column>
+										{o.store != null ? o.store.name : ""}
+									</Grid.Column>
+								) : (
+									""
+								)}
 								<Grid.Column>
 									<Button
 										primary
