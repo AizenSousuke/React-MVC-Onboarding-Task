@@ -93,7 +93,7 @@ class CustomerModal extends Component {
 					name: this.props.param.name,
 					address: this.props.param.address,
 					price: this.props.param.price,
-					dateSold: this.props.param.date,
+					dateSold: this.props.param.dateSold,
 					customerName:
 						this.props.param.customer == null
 							? ""
@@ -151,6 +151,7 @@ class CustomerModal extends Component {
 											dateSold: e.target.value,
 										});
 									}}
+									value={this.state.dateSold}
 								/>
 							</Form.Field>
 							<Form.Field required>
@@ -161,7 +162,7 @@ class CustomerModal extends Component {
 									search
 									options={this.state.customerList}
 									placeholder="Customer Name"
-									onChange={(e, { value }) => 
+									onChange={(e, { value }) =>
 										this.setState({
 											customerName: value,
 										})
@@ -304,6 +305,9 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
+											customer: this.state.customerName,
+											product: this.state.productName,
+											store: this.state.storeName,
 										}
 									);
 									break;
@@ -335,6 +339,9 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
+											customer: this.state.customerName,
+											product: this.state.productName,
+											store: this.state.storeName,
 										}
 									);
 									break;

@@ -89,7 +89,6 @@ export class Page extends Component {
 	render() {
 		// Conditional Rendering
 		var TableHeader;
-		var TableBody;
 		switch (this.props.title) {
 			case "Sales":
 				TableHeader = (
