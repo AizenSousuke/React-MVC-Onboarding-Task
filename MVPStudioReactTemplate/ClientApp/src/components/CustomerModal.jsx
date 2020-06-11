@@ -22,7 +22,7 @@ class CustomerModal extends Component {
 	}
 
 	componentWillMount() {
-		// TODO: Fix data not refreshing since modal is already loaded. This function loads when going to the sales page though. 
+		// TODO: Fix data not refreshing since modal is already loaded. This function loads when going to the sales page though.
 		this.API.GET("CUSTOMERS").then((data) => {
 			// Empty dict
 			var dict = [];
@@ -94,9 +94,18 @@ class CustomerModal extends Component {
 					address: this.props.param.address,
 					price: this.props.param.price,
 					dateSold: this.props.param.date,
-					customerName: this.props.param.customer == null ? "" : this.props.param.customer.name,
-					productName: this.props.param.product == null ? "" : this.props.param.product.name,
-					storeName: this.props.param.store == null ? "" : this.props.param.store.name,
+					customerName:
+						this.props.param.customer == null
+							? ""
+							: this.props.param.customer.name,
+					productName:
+						this.props.param.product == null
+							? ""
+							: this.props.param.product.name,
+					storeName:
+						this.props.param.store == null
+							? ""
+							: this.props.param.store.name,
 				});
 				break;
 			default:
@@ -152,7 +161,7 @@ class CustomerModal extends Component {
 									search
 									options={this.state.customerList}
 									placeholder="Customer Name"
-									onChange={({ value }) =>
+									onChange={(e, { value }) => 
 										this.setState({
 											customerName: value,
 										})
@@ -168,7 +177,7 @@ class CustomerModal extends Component {
 									search
 									options={this.state.productList}
 									placeholder="Product Name"
-									onChange={({ value }) =>
+									onChange={(e, { value }) =>
 										this.setState({
 											productName: value,
 										})
@@ -184,7 +193,7 @@ class CustomerModal extends Component {
 									search
 									options={this.state.storeList}
 									placeholder="Store Name"
-									onChange={({ value }) =>
+									onChange={(e, { value }) =>
 										this.setState({
 											storeName: value,
 										})
