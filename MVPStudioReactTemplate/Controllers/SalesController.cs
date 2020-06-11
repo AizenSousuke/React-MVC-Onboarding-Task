@@ -50,7 +50,11 @@ namespace MVPStudioReactTemplate.Controllers
                 return BadRequest("Sale Exists");
             }
 
-            await _context.Sales.AddAsync(Sale);
+            Sale newSale = new Sale() { DateSold = Sale.DateSold, Customer = await _context.Customers.FirstOrDefaultAsync(c => c == Sale.Customer), Product = await _context.Products.FirstOrDefaultAsync(p => p == Sale.Product), Store = await _context.Stores.FirstOrDefaultAsync(s => s == Sale.Store) };
+            Console.WriteLine("=======================================");
+            Console.WriteLine(newSale);
+
+            await _context.Sales.AddAsync(newSale);
             bool isSaved = await SaveChangesAsync();
             if (!isSaved)
             {
@@ -80,10 +84,13 @@ namespace MVPStudioReactTemplate.Controllers
             }
 
             // Update
-            oldSale.Customer = Sale.Customer;
-            oldSale.Product = Sale.Product;
-            oldSale.Store = Sale.Store;
-            oldSale.DateSold = Sale.DateSold;
+
+            Sale updatedSale = new Sale() { DateSold = Sale.DateSold, Customer = await _context.Customers.FirstOrDefaultAsync(c => c == Sale.Customer), Product = await _context.Products.FirstOrDefaultAsync(p => p == Sale.Product), Store = await _context.Stores.FirstOrDefaultAsync(s => s == Sale.Store) };
+
+            oldSale.Customer = updatedSale.Customer;
+            oldSale.Product = updatedSale.Product;
+            oldSale.Store = updatedSale.Store;
+            oldSale.DateSold = updatedSale.DateSold;
 
             // Change the entity state
             _context.Entry(oldSale).State = EntityState.Modified;

@@ -81,7 +81,7 @@ export class Page extends Component {
 
 	setModal(type, action = null, param = null) {
 		this.setState({ type: type, action: action, param: param }, () => {
-			console.log("Modal State: ", this.state, param);
+			console.log("Modal State: ", this.state, "Modal Param:", param);
 			this.openModal(false, type, action, param);
 		});
 	}
