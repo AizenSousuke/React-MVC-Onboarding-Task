@@ -24,7 +24,7 @@ class CustomerModal extends Component {
 	componentWillMount() {
 		// TODO: Fix data not refreshing since modal is already loaded. This function loads when going to the sales page though.
 		this.API.GET("CUSTOMERS").then((data) => {
-			// Empty dict
+			// Convert array to dict
 			var dict = [];
 			data.forEach((c) => {
 				dict.push({
@@ -52,7 +52,7 @@ class CustomerModal extends Component {
 			console.log("Product List: ", dict);
 		});
 		this.API.GET("STORES").then((data) => {
-			// Empty dict
+			// Convert array to dict
 			var dict = [];
 			data.forEach((c) => {
 				dict.push({
@@ -113,7 +113,7 @@ class CustomerModal extends Component {
 					name: "",
 					address: "",
 					price: "",
-					dateSold: "",
+					dateSold: this.props.param.dateSold,
 					customerName: "",
 					productName: "",
 					storeName: "",
@@ -323,6 +323,7 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
+											// TODO: Change them to objects
 											customer: this.state.customerName,
 											product: this.state.productName,
 											store: this.state.storeName,
@@ -339,6 +340,7 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
+											// TODO: Change them to objects
 											customer: this.state.customerName,
 											product: this.state.productName,
 											store: this.state.storeName,

@@ -143,7 +143,7 @@ export class Page extends Component {
 									name: "",
 									address: "",
 									price: "",
-									dateSold: "",
+									dateSold: "2020-06-01",
 								})
 							}
 						>
@@ -205,13 +205,7 @@ export class Page extends Component {
 											this.setModal(
 												this.state.type,
 												"DELETE",
-												{
-													id: o.id,
-													name: o.name,
-													address: o.address,
-													price: o.price,
-													dateSold: o.dateSoldSold,
-												}
+												o
 											)
 										}
 									>
