@@ -9,7 +9,7 @@ namespace MVPStudioReactTemplate.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public DateTime DateSold { get; set; }
+        public string DateSold { get; set; }
         [Required]
         public Product Product { get; set; }
         [Required]
