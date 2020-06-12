@@ -78,11 +78,15 @@ namespace MVPStudioReactTemplate
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
-
                 if (env.IsDevelopment())
                 {
+                    spa.Options.SourcePath = "ClientApp";
                     spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+                else
+                {
+                    // Fixed issues with production build
+                    spa.Options.SourcePath = "ClientApp/build";
                 }
             });
         }
