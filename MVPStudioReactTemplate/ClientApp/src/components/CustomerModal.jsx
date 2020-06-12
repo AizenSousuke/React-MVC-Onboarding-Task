@@ -245,9 +245,13 @@ class CustomerModal extends Component {
 									options={this.state.customerList}
 									placeholder="Customer Name"
 									onChange={(e, { value }) =>
-										this.setState({
-											customerName: value,
-										}, () => this.changeNameToObjectInState())
+										this.setState(
+											{
+												customerName: value,
+											},
+											() =>
+												this.changeNameToObjectInState()
+										)
 									}
 									value={this.state.customerName}
 								/>
@@ -261,9 +265,13 @@ class CustomerModal extends Component {
 									options={this.state.productList}
 									placeholder="Product Name"
 									onChange={(e, { value }) =>
-										this.setState({
-											productName: value,
-										}, () => this.changeNameToObjectInState())
+										this.setState(
+											{
+												productName: value,
+											},
+											() =>
+												this.changeNameToObjectInState()
+										)
 									}
 									value={this.state.productName}
 								/>
@@ -277,9 +285,13 @@ class CustomerModal extends Component {
 									options={this.state.storeList}
 									placeholder="Store Name"
 									onChange={(e, { value }) =>
-										this.setState({
-											storeName: value,
-										}, () => this.changeNameToObjectInState())
+										this.setState(
+											{
+												storeName: value,
+											},
+											() =>
+												this.changeNameToObjectInState()
+										)
 									}
 									value={this.state.storeName}
 								/>
