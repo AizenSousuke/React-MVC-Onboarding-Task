@@ -341,7 +341,7 @@ class ModalForm extends Component {
 						</div>
 					);
 				} else {
-					FormItems = <div>Are you sure?</div>;
+					FormItems = <div>Are you sure? This will delete <b>ALL</b> related data in Sales Page.</div>;
 				}
 				break;
 			default:
@@ -375,7 +375,7 @@ class ModalForm extends Component {
 						</div>
 					);
 				} else {
-					FormItems = <div>Are you sure?</div>;
+					FormItems = <div>Are you sure? This will delete <b>ALL</b> related data in Sales Page.</div>;
 				}
 				break;
 		}
