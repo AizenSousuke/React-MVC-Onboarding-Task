@@ -29,8 +29,8 @@ class CustomerModal extends Component {
 			data.forEach((c) => {
 				dict.push({
 					key: c.id,
-					value: c.name,
-					text: c.name,
+					value: c.name + ", " + c.address,
+					text: c.name + ", " + c.address,
 				});
 			});
 
@@ -97,7 +97,7 @@ class CustomerModal extends Component {
 					customerName:
 						this.props.param.customer == null
 							? ""
-							: this.props.param.customer.name,
+							: this.props.param.customer.name + ", " + this.props.param.customer.address,
 					productName:
 						this.props.param.product == null
 							? ""

@@ -46,6 +46,11 @@ namespace MVPStudioReactTemplate.Models
                     },
                     new Customer()
                     {
+                        Name = "Nik",
+                        Address = "86 Yishun Drive, Singapore"
+                    },
+                    new Customer()
+                    {
                         Name = "John",
                         Address = "762 Bukit Panjang Road, Singapore"
                     },
@@ -161,6 +166,13 @@ namespace MVPStudioReactTemplate.Models
                         DateSold = DateTime.Now.AddDays(random.Next(1,5)).ToString("yyyy-MM-dd"),
                         Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Mario"),
                         Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet"), 
+                        Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "Singapore")
+                    },
+                    new Sale()
+                    {
+                        DateSold = DateTime.Now.AddDays(random.Next(1, 5)).ToString("yyyy-MM-dd"),
+                        Customer = await context.Customers.FirstOrDefaultAsync(c => c.Name == "Nik" && c.Address == "86 Yishun Drive, Singapore"),
+                        Product = await context.Products.FirstOrDefaultAsync(p => p.Name == "Tablet"),
                         Store = await context.Stores.FirstOrDefaultAsync(s => s.Name == "Singapore")
                     }
                 );
