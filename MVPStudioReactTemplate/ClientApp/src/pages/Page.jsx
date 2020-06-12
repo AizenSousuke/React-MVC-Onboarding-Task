@@ -138,14 +138,23 @@ export class Page extends Component {
 						<Button
 							primary
 							fluid
-							onClick={() =>
+							onClick={() => {
 								this.setModal(this.state.type, "CREATE", {
 									name: "",
 									address: "",
 									price: "",
-									dateSold: new Date().getFullYear() + "-" + (new Date().getMonth() < 9 ? "0" + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)) + "-" + (new Date().getDate < 10 ? "0" + new Date().getDate() : new Date().getDate()),
-								})
-							}
+									dateSold:
+										new Date().getFullYear() +
+										"-" +
+										(new Date().getMonth() < 9
+											? "0" + (new Date().getMonth() + 1)
+											: new Date().getMonth() + 1) +
+										"-" +
+										(new Date().getDate < 10
+											? "0" + new Date().getDate()
+											: new Date().getDate()),
+								});
+							}}
 						>
 							Add
 						</Button>
@@ -186,13 +195,13 @@ export class Page extends Component {
 									<Button
 										primary
 										fluid
-										onClick={() =>
+										onClick={() => {
 											this.setModal(
 												this.state.type,
 												"EDIT",
 												o
-											)
-										}
+											);
+										}}
 									>
 										Edit
 									</Button>

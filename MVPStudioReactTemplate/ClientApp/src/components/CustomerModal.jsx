@@ -197,6 +197,7 @@ class CustomerModal extends Component {
 	}
 
 	changeNameToObjectInState() {
+		console.log("Setting Objects");
 		this.convertStringToObjects("CUSTOMERS", this.state.customerName).then(
 			(data) => {
 				this.setState({ customer: data });
@@ -229,9 +230,13 @@ class CustomerModal extends Component {
 									type="date"
 									onChange={(e) => {
 										console.log(e.target.value);
-										this.setState({
-											dateSold: e.target.value,
-										});
+										this.setState(
+											{
+												dateSold: e.target.value,
+											},
+											() =>
+												this.changeNameToObjectInState()
+										);
 									}}
 									value={this.state.dateSold}
 								/>
@@ -385,7 +390,6 @@ class CustomerModal extends Component {
 						id="form"
 						onSubmit={(e) => {
 							e.preventDefault();
-
 							console.log("Form Submit", e.target);
 							switch (this.props.action) {
 								case "DELETE":
