@@ -143,7 +143,7 @@ export class Page extends Component {
 									name: "",
 									address: "",
 									price: "",
-									dateSold: "2020-06-01",
+									dateSold: new Date().getFullYear() + "-" + (new Date().getMonth() < 9 ? "0" + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)) + "-" + (new Date().getDate < 10 ? "0" + new Date().getDate() : new Date().getDate()),
 								})
 							}
 						>
