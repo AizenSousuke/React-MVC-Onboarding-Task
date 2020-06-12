@@ -383,7 +383,7 @@ class CustomerModal extends Component {
 		return (
 			<Modal size={"mini"} open={this.props.open}>
 				<Modal.Header>
-					{this.props.type} {this.props.action}
+					{this.props.action.charAt(0).toUpperCase() + this.props.action.slice(1).toLowerCase()} {this.props.type}
 				</Modal.Header>
 				<Modal.Content>
 					<Form
