@@ -10,10 +10,13 @@ class CustomerModal extends Component {
 			address: "",
 			price: "",
 			dateSold: "",
+			customer: {},
 			customerName: "",
 			customerList: [],
+			product: {},
 			productName: "",
 			productList: [],
+			store: {},
 			storeName: "",
 			storeList: [],
 		};
@@ -35,7 +38,7 @@ class CustomerModal extends Component {
 			});
 
 			this.setState({ customerList: dict });
-			console.log("Customer List: ", dict);
+			// console.log("Customer List: ", dict);
 		});
 		this.API.GET("PRODUCTS").then((data) => {
 			// Convert array to dict
@@ -43,13 +46,13 @@ class CustomerModal extends Component {
 			data.forEach((c) => {
 				dict.push({
 					key: c.id,
-					value: c.name,
-					text: c.name,
+					value: c.name + ", " + c.price,
+					text: c.name + ", " + c.price,
 				});
 			});
 
 			this.setState({ productList: dict });
-			console.log("Product List: ", dict);
+			// console.log("Product List: ", dict);
 		});
 		this.API.GET("STORES").then((data) => {
 			// Convert array to dict
@@ -57,13 +60,13 @@ class CustomerModal extends Component {
 			data.forEach((c) => {
 				dict.push({
 					key: c.id,
-					value: c.name,
-					text: c.name,
+					value: c.name + ", " + c.address,
+					text: c.name + ", " + c.address,
 				});
 			});
 
 			this.setState({ storeList: dict });
-			console.log("Store List: ", dict);
+			// console.log("Store List: ", dict);
 		});
 	}
 
@@ -97,15 +100,21 @@ class CustomerModal extends Component {
 					customerName:
 						this.props.param.customer == null
 							? ""
-							: this.props.param.customer.name + ", " + this.props.param.customer.address,
+							: this.props.param.customer.name +
+							  ", " +
+							  this.props.param.customer.address,
 					productName:
 						this.props.param.product == null
 							? ""
-							: this.props.param.product.name,
+							: this.props.param.product.name +
+							  ", " +
+							  this.props.param.product.price,
 					storeName:
 						this.props.param.store == null
 							? ""
-							: this.props.param.store.name,
+							: this.props.param.store.name +
+							  ", " +
+							  this.props.param.store.address,
 				});
 				break;
 			default:
@@ -132,6 +141,79 @@ class CustomerModal extends Component {
 				e.target.pattern
 			);
 		}
+	}
+
+	async convertStringToObjects(type = "", stringToConvert) {
+		// console.log("Converting ", stringToConvert);
+		var obj;
+		// Get object based on the list of objects
+		switch (type) {
+			case "PRODUCTS":
+				obj = await this.API.GET(type).then((data) => {
+					// console.log("Product string to convert: ", stringToConvert);
+					var name = stringToConvert.split(", ")[0];
+					var price = parseFloat(
+						stringToConvert.replace(name + ", ", "")
+					);
+					// console.log(
+					// 	"Finding [",
+					// 	name,
+					// 	"][",
+					// 	price,
+					// 	"] from ",
+					// 	data
+					// );
+					var foundObject = data.find(
+						(c) => c.name === name && c.price === price
+					);
+					// console.log("Object to transfer to Page: ", foundObject);
+					// Can also set the state here
+
+					return foundObject;
+				});
+				return obj;
+			default:
+				obj = await this.API.GET(type).then((data) => {
+					var name = stringToConvert.split(", ")[0];
+					var address = stringToConvert.replace(name + ", ", "");
+					// console.log(
+					// 	"Finding [",
+					// 	name,
+					// 	"][",
+					// 	address,
+					// 	"] from ",
+					// 	data
+					// );
+					var foundObject = data.find(
+						(c) => c.name === name && c.address === address
+					);
+					// console.log("Object to transfer to Page: ", foundObject);
+					// Can also set the state here
+
+					return foundObject;
+				});
+				return obj;
+		}
+	}
+
+	changeNameToObjectInState() {
+		this.convertStringToObjects("CUSTOMERS", this.state.customerName).then(
+			(data) => {
+				this.setState({ customer: data });
+			}
+		);
+
+		this.convertStringToObjects("PRODUCTS", this.state.productName).then(
+			(data) => {
+				this.setState({ product: data });
+			}
+		);
+
+		this.convertStringToObjects("STORES", this.state.storeName).then(
+			(data) => {
+				this.setState({ store: data });
+			}
+		);
 	}
 
 	render() {
@@ -165,7 +247,7 @@ class CustomerModal extends Component {
 									onChange={(e, { value }) =>
 										this.setState({
 											customerName: value,
-										})
+										}, () => this.changeNameToObjectInState())
 									}
 									value={this.state.customerName}
 								/>
@@ -181,7 +263,7 @@ class CustomerModal extends Component {
 									onChange={(e, { value }) =>
 										this.setState({
 											productName: value,
-										})
+										}, () => this.changeNameToObjectInState())
 									}
 									value={this.state.productName}
 								/>
@@ -197,7 +279,7 @@ class CustomerModal extends Component {
 									onChange={(e, { value }) =>
 										this.setState({
 											storeName: value,
-										})
+										}, () => this.changeNameToObjectInState())
 									}
 									value={this.state.storeName}
 								/>
@@ -291,6 +373,7 @@ class CustomerModal extends Component {
 						id="form"
 						onSubmit={(e) => {
 							e.preventDefault();
+
 							console.log("Form Submit", e.target);
 							switch (this.props.action) {
 								case "DELETE":
@@ -305,9 +388,9 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
-											customer: this.state.customerName,
-											product: this.state.productName,
-											store: this.state.storeName,
+											customer: this.state.customer,
+											product: this.state.product,
+											store: this.state.store,
 										}
 									);
 									break;
@@ -323,10 +406,9 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
-											// TODO: Change them to objects
-											customer: this.state.customerName,
-											product: this.state.productName,
-											store: this.state.storeName,
+											customer: this.state.customer,
+											product: this.state.product,
+											store: this.state.store,
 										}
 									);
 									break;
@@ -340,10 +422,9 @@ class CustomerModal extends Component {
 											address: this.state.address,
 											price: this.state.price,
 											dateSold: this.state.dateSold,
-											// TODO: Change them to objects
-											customer: this.state.customerName,
-											product: this.state.productName,
-											store: this.state.storeName,
+											customer: this.state.customer,
+											product: this.state.product,
+											store: this.state.store,
 										}
 									);
 									break;
