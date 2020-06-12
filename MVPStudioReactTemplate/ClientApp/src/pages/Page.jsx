@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Button } from "semantic-ui-react";
 import Api from "../services/Api";
-import CustomerModal from "../components/CustomerModal";
+import ModalForm from "../components/ModalForm";
 
 export class Page extends Component {
 	constructor(props) {
@@ -122,7 +122,7 @@ export class Page extends Component {
 
 		return (
 			<Grid celled>
-				<CustomerModal
+				<ModalForm
 					ref={this.ModalRef}
 					open={this.state.modalOpen}
 					type={this.state.type}

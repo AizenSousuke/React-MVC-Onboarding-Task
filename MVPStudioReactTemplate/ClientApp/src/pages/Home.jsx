@@ -9,17 +9,18 @@ export class Home extends Component {
 		super(props);
 		this.API = new Api();
 		this.state = {
-            activeMenu: "sales",
+            activeMenu: window.location.pathname.slice(1),
 			customers: [],
         };
-        
-		this.Init();
+
+		// this.Init();
 	}
 
 	Init() {
-		this.API.GET("CUSTOMERS").then((data) =>
-			this.setState({ customers: data })
-		);
+
+		// this.API.GET("CUSTOMERS").then((data) =>
+		// 	this.setState({ customers: data })
+		// );
 
 		// Sample API call
 		// this.API.GET("CUSTOMERS").then(c => console.log(c));
@@ -32,8 +33,6 @@ export class Home extends Component {
     handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
 
 	render() {
-        const { activeMenu } = this.state.activeMenu;
-
 		return (
             <Grid container>
                 <Grid.Column>
@@ -44,7 +43,7 @@ export class Home extends Component {
                                 as={ Link }
                                 to='/'
                                 name="sales"
-                                active={ activeMenu === 'sales'}
+                                active={ this.state.activeMenu === 'sales'}
                                 onClick={this.handleMenuClick}
                             >
                                 Sales
@@ -53,7 +52,7 @@ export class Home extends Component {
                                 as={ Link }
                                 to='/stores'
                                 name="stores"
-                                active={ activeMenu === 'stores'}
+                                active={ this.state.activeMenu === 'stores'}
                                 onClick={this.handleMenuClick}
                             >
                                 Stores
@@ -62,7 +61,7 @@ export class Home extends Component {
                                 as={ Link }
                                 to='/customers'
                                 name="customers"
-                                active={ activeMenu === 'customers'}
+                                active={ this.state.activeMenu === 'customers'}
                                 onClick={this.handleMenuClick}
                             >
                                 Customers
@@ -71,7 +70,7 @@ export class Home extends Component {
                                 as={ Link }
                                 to='/products'
                                 name="products"
-                                active={ activeMenu === 'products'}
+                                active={ this.state.activeMenu === 'products'}
                                 onClick={this.handleMenuClick}
                             >
                                 Products
