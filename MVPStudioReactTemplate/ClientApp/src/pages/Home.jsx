@@ -83,6 +83,9 @@ export class Home extends Component {
                         <Route exact path="/customers" render={() => {return <Page title="Customers" />}} />
                         <Route exact path="/products" render={() => {return <Page title="Products" />}} />
                     </Grid.Row>
+                    <Grid.Row>
+                        © 2020 - Nik
+                    </Grid.Row>
                 </Grid.Column>
             </Grid>
 		);

@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Grid, Button } from "semantic-ui-react";
+import {
+	Grid,
+	Button,
+	Icon,
+	Pagination,
+	Dropdown,
+} from "semantic-ui-react";
 import Api from "../services/Api";
 import ModalForm from "../components/ModalForm";
 
@@ -15,6 +21,12 @@ export class Page extends Component {
 			modalEditOpen: false,
 			modalDeleteOpen: false,
 			modalOpen: false,
+			showOptions: [
+				{ key: 1, text: "5", value: 5 },
+				{ key: 2, text: "10", value: 10 },
+				{ key: 3, text: "All", value: 999 },
+			],
+			showOptionsDefault: 10,
 		};
 
 		this.API = new Api();
@@ -31,7 +43,7 @@ export class Page extends Component {
 		this.setState({ type: this.props.title });
 		this.API.GET(this.props.title).then((data) => {
 			this.setState({ list: data });
-			console.log("Loaded: ", data);
+			// console.log("Loaded: ", data);
 			return data;
 		});
 	}
@@ -121,117 +133,148 @@ export class Page extends Component {
 		}
 
 		return (
-			<Grid celled>
-				<ModalForm
-					ref={this.ModalRef}
-					open={this.state.modalOpen}
-					type={this.state.type}
-					action={this.state.action}
-					param={this.state.param}
-					closeMethod={this.openModal.bind(this)}
-				/>
-				<Grid.Row color={"black"}>
-					<Grid.Column width={12}>
-						<h1>{this.props.title}</h1>
-					</Grid.Column>
-					<Grid.Column width={4}>
-						<Button
-							primary
-							fluid
-							onClick={() => {
-								this.setModal(this.state.type, "CREATE", {
-									name: "",
-									address: "",
-									price: "",
-									dateSold:
-										new Date().getFullYear() +
-										"-" +
-										(new Date().getMonth() < 9
-											? "0" + (new Date().getMonth() + 1)
-											: new Date().getMonth() + 1) +
-										"-" +
-										(new Date().getDate < 10
-											? "0" + new Date().getDate()
-											: new Date().getDate()),
-								});
-							}}
-						>
-							Add
-						</Button>
-					</Grid.Column>
-				</Grid.Row>
-				{TableHeader}
-				{this.state.list.length > 0 ? (
-					this.state.list.map((o) => {
-						return (
-							<Grid.Row key={o.id} columns="equal">
-								<Grid.Column>{o.id}</Grid.Column>
-								<Grid.Column>
-									{o.name}
-									{o.dateSold}
-								</Grid.Column>
-								<Grid.Column>
-									{o.address}
-									{o.price ? "$" + o.price : ""}
-									{o.customer != null ? o.customer.name : ""}
-								</Grid.Column>
-								{o.product ? (
-									<Grid.Column>
-										{o.product != null
-											? o.product.name
-											: ""}
-									</Grid.Column>
-								) : (
-									""
-								)}
-								{o.store ? (
-									<Grid.Column>
-										{o.store != null ? o.store.name : ""}
-									</Grid.Column>
-								) : (
-									""
-								)}
-								<Grid.Column>
-									<Button
-										primary
-										fluid
-										onClick={() => {
-											this.setModal(
-												this.state.type,
-												"EDIT",
-												o
-											);
-										}}
-									>
-										Edit
-									</Button>
-								</Grid.Column>
-								<Grid.Column>
-									<Button
-										negative
-										fluid
-										onClick={() =>
-											this.setModal(
-												this.state.type,
-												"DELETE",
-												o
-											)
-										}
-									>
-										Delete
-									</Button>
-								</Grid.Column>
-							</Grid.Row>
-						);
-					})
-				) : (
-					<Grid.Row width={16}>
-						<Grid.Column width={16} textAlign="center">
-							"Nothing to show here. Add one!"
+			<div>
+				<Grid celled>
+					<ModalForm
+						ref={this.ModalRef}
+						open={this.state.modalOpen}
+						type={this.state.type}
+						action={this.state.action}
+						param={this.state.param}
+						closeMethod={this.openModal.bind(this)}
+					/>
+					<Grid.Row color={"black"}>
+						<Grid.Column width={12}>
+							<h1>{this.props.title}</h1>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Button
+								primary
+								fluid
+								onClick={() => {
+									this.setModal(this.state.type, "CREATE", {
+										name: "",
+										address: "",
+										price: "",
+										dateSold:
+											new Date().getFullYear() +
+											"-" +
+											(new Date().getMonth() < 9
+												? "0" +
+												  (new Date().getMonth() + 1)
+												: new Date().getMonth() + 1) +
+											"-" +
+											(new Date().getDate < 10
+												? "0" + new Date().getDate()
+												: new Date().getDate()),
+									});
+								}}
+							>
+								Add
+							</Button>
 						</Grid.Column>
 					</Grid.Row>
-				)}
-			</Grid>
+					{TableHeader}
+					{this.state.list.length > 0 ? (
+						this.state.list.map((o) => {
+							return (
+								<Grid.Row key={o.id} columns="equal">
+									<Grid.Column>{o.id}</Grid.Column>
+									<Grid.Column>
+										{o.name}
+										{o.dateSold}
+									</Grid.Column>
+									<Grid.Column>
+										{o.address}
+										{o.price ? "$" + o.price : ""}
+										{o.customer != null
+											? o.customer.name
+											: ""}
+									</Grid.Column>
+									{o.product ? (
+										<Grid.Column>
+											{o.product != null
+												? o.product.name
+												: ""}
+										</Grid.Column>
+									) : (
+										""
+									)}
+									{o.store ? (
+										<Grid.Column>
+											{o.store != null
+												? o.store.name
+												: ""}
+										</Grid.Column>
+									) : (
+										""
+									)}
+									<Grid.Column>
+										<Button
+											color={"yellow"}
+											fluid
+											onClick={() => {
+												this.setModal(
+													this.state.type,
+													"EDIT",
+													o
+												);
+											}}
+											icon
+											labelPosition="left"
+										>
+											<Icon name="edit outline" />
+											Edit
+										</Button>
+									</Grid.Column>
+									<Grid.Column>
+										<Button
+											negative
+											fluid
+											onClick={() =>
+												this.setModal(
+													this.state.type,
+													"DELETE",
+													o
+												)
+											}
+											icon
+											labelPosition="left"
+										>
+											<Icon name="delete" />
+											Delete
+										</Button>
+									</Grid.Column>
+								</Grid.Row>
+							);
+						})
+					) : (
+						<Grid.Row width={16}>
+							<Grid.Column width={16} textAlign="center">
+								"Nothing to show here. Add one!"
+							</Grid.Column>
+						</Grid.Row>
+					)}
+				</Grid>
+				<Grid>
+					<Grid.Row columns="equal">
+						<Grid.Column>
+							<Dropdown
+								selection
+								options={this.state.showOptions}
+								defaultValue={this.state.showOptionsDefault}
+							/>
+						</Grid.Column>
+						<Grid.Column>
+							<Pagination
+								defaultActivePage={1}
+								totalPages={1}
+							></Pagination>
+						</Grid.Column>
+						<Grid.Column></Grid.Column>
+					</Grid.Row>
+				</Grid>
+			</div>
 		);
 	}
 }

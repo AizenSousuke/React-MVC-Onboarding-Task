@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Modal, Button, Message, Dropdown } from "semantic-ui-react";
+import { Form, Modal, Button, Message, Dropdown, Icon } from "semantic-ui-react";
 import Api from "../services/Api";
 
 class ModalForm extends Component {
@@ -19,6 +19,7 @@ class ModalForm extends Component {
 			store: {},
 			storeName: "",
 			storeList: [],
+			formValidForSubmit: null,
 		};
 
 		this.API = new Api();
@@ -451,10 +452,12 @@ class ModalForm extends Component {
 					</Form>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button negative onClick={() => this.props.closeMethod()}>
+					<Button icon labelPosition="left" negative onClick={() => this.props.closeMethod()}>
+						<Icon name="cancel" />
 						Cancel
 					</Button>
-					<Button positive type="submit" form="form">
+					<Button icon labelPosition="right" positive type="submit" form="form">
+						<Icon name="arrow right" />
 						Submit
 					</Button>
 				</Modal.Actions>
