@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVPStudioReactTemplate.Context;
+using System;
 
 namespace MVPStudioReactTemplate
 {
@@ -20,12 +21,13 @@ namespace MVPStudioReactTemplate
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                if (env.IsDevelopment())
+
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("Database"));
                 } else
