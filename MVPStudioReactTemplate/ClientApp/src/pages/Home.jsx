@@ -79,6 +79,7 @@ export class Home extends Component {
                     </Grid.Row>
                     <Grid.Row>
                         <Route exact path="/" render={() => {return <Page title="Sales" />}} />
+                        <Route exact path="/sales" render={() => {return <Page title="Sales" />}} />
                         <Route exact path="/stores" render={() => {return <Page title="Stores" />}} />
                         <Route exact path="/customers" render={() => {return <Page title="Customers" />}} />
                         <Route exact path="/products" render={() => {return <Page title="Products" />}} />
