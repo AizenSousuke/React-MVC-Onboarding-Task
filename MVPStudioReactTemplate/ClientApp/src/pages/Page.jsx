@@ -5,7 +5,6 @@ import {
 	Icon,
 	Pagination,
 	Dropdown,
-	Segment,
 } from "semantic-ui-react";
 import Api from "../services/Api";
 import ModalForm from "../components/ModalForm";

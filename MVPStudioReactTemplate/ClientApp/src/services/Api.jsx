@@ -6,6 +6,13 @@ export class Api {
 		"Content-Type": "application/json",
 	};
 
+	constructor() {
+		if (window.location.host !== "reactmvconboardingtask.azurewebsites.net") {
+			// console.log(window.location.host);
+			this.API_URL = "https://localhost:5001/api/";
+		}
+	}
+
 	APIURL() {
 		return this.API_URL;
 	}
