@@ -37,7 +37,7 @@ export class Home extends Component {
             <Grid container>
                 <Grid.Column>
                     <Grid.Row>
-                        <Menu>
+                        <Menu fluid compact>
                             <Menu.Item as={"h3"} header>React</Menu.Item>
                             <Menu.Item
                                 as={ Link }

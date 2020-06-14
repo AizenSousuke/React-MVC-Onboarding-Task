@@ -5,6 +5,7 @@ import {
 	Icon,
 	Pagination,
 	Dropdown,
+	Segment,
 } from "semantic-ui-react";
 import Api from "../services/Api";
 import ModalForm from "../components/ModalForm";
@@ -256,16 +257,17 @@ export class Page extends Component {
 						</Grid.Row>
 					)}
 				</Grid>
-				<Grid>
+				<Grid stackable>
 					<Grid.Row columns="equal">
 						<Grid.Column>
 							<Dropdown
+								compact
 								selection
 								options={this.state.showOptions}
 								defaultValue={this.state.showOptionsDefault}
 							/>
 						</Grid.Column>
-						<Grid.Column>
+						<Grid.Column className="ui center aligned">
 							<Pagination
 								defaultActivePage={1}
 								totalPages={1}
