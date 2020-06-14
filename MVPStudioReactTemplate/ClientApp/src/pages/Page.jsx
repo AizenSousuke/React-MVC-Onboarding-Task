@@ -5,6 +5,7 @@ import {
 	Icon,
 	Pagination,
 	Dropdown,
+	Responsive,
 } from "semantic-ui-react";
 import Api from "../services/Api";
 import ModalForm from "../components/ModalForm";
@@ -133,7 +134,7 @@ export class Page extends Component {
 		}
 
 		return (
-			<div>
+			<Responsive>
 				<Grid celled>
 					<ModalForm
 						ref={this.ModalRef}
@@ -224,7 +225,9 @@ export class Page extends Component {
 											labelPosition="left"
 										>
 											<Icon name="edit outline" />
-											Edit
+											<Responsive minWidth={768}>
+												Edit
+											</Responsive>
 										</Button>
 									</Grid.Column>
 									<Grid.Column>
@@ -242,7 +245,9 @@ export class Page extends Component {
 											labelPosition="left"
 										>
 											<Icon name="delete" />
-											Delete
+											<Responsive minWidth={768}>
+												Delete
+											</Responsive>
 										</Button>
 									</Grid.Column>
 								</Grid.Row>
@@ -275,7 +280,7 @@ export class Page extends Component {
 						<Grid.Column></Grid.Column>
 					</Grid.Row>
 				</Grid>
-			</div>
+			</Responsive>
 		);
 	}
 }
