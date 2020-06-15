@@ -26,7 +26,10 @@ class ModalForm extends Component {
 	}
 
 	componentWillMount() {
-		// TODO: Fix data not refreshing since modal is already loaded. This function loads when going to the sales page though.
+		this.updateObjectListsInState();
+	}
+
+	updateObjectListsInState() {
 		this.API.GET("CUSTOMERS").then((data) => {
 			// Convert array to dict
 			var dict = [];

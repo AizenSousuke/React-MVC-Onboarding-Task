@@ -31,12 +31,9 @@ export class Page extends Component {
 		};
 
 		this.API = new Api();
-
-		// this.FormRef = React.createRef();
-		this.ModalRef = React.createRef();
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.Init();
 	}
 
@@ -44,7 +41,7 @@ export class Page extends Component {
 		this.setState({ type: this.props.title });
 		this.API.GET(this.props.title).then((data) => {
 			this.setState({ list: data });
-			// console.log("Loaded: ", data);
+			console.log("Loaded: ", data);
 			return data;
 		});
 	}
@@ -137,7 +134,6 @@ export class Page extends Component {
 			<Responsive>
 				<Grid celled>
 					<ModalForm
-						ref={this.ModalRef}
 						open={this.state.modalOpen}
 						type={this.state.type}
 						action={this.state.action}
