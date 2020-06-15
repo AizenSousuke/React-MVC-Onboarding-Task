@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { Api } from "../services/Api";
 import { Grid, Menu } from "semantic-ui-react";
 import { Route, Link } from "react-router-dom";
@@ -29,7 +29,7 @@ export class Home extends Component {
 	}
 
 	handleMenuClick = (e, { name }) => {
-        if (this.state.activeMenu == name) {
+        if (this.state.activeMenu === name) {
             // Refresh data manually by clicking on the same menu in case API is disconnected and doesn't load any data when user went to this page
             console.log("Same menu has been clicked!");
             this.PageRef.current.Init();
