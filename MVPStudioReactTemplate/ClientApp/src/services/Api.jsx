@@ -1,6 +1,6 @@
 export class Api {
 	// API_URL = "https://localhost:5001/api/";
-	API_URL = "http://reactmvconboardingtask.azurewebsites.net/api/";
+	API_URL = "https://reactmvconboardingtask.azurewebsites.net/api/";
 	HEADERS = {
 		"Accept": "application/json",
 		"Content-Type": "application/json",

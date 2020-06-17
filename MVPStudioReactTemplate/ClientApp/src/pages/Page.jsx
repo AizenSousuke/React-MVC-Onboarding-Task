@@ -34,6 +34,7 @@ export class Page extends Component {
 	}
 
 	componentWillMount() {
+		// Initialize API data before loading the component
 		this.Init();
 	}
 
