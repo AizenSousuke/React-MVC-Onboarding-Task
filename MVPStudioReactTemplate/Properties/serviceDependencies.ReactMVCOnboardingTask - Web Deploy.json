@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/onboardingdatabasedbserver/databases/OnboardingDatabase",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/onboardingdatabasedbserver/databases/OnboardingDatabase",
       "type": "mssql.azure",
       "connectionId": "ProductionDatabase",
       "secretStore": "AzureAppSettings"
